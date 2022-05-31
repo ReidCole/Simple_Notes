@@ -1,0 +1,51 @@
+site design doc
+
+- title: Simple Notes
+- first thing you see when you load up the site is an empty note you can write on
+- header has navigation buttons + dark mode toggle
+  - mobile: just icons
+  - desktop: site title + icons with text
+  - signin icon can change colors for signin and signout
+- site has a multi-colored color scheme. different colors for different buttons
+- use firebase auth for auth and firestore for saving notes to account
+- use netlify for hosting (url would be simplenotes.netlify.app)
+- footer with your name and link to your portfolio page
+- use cypress to test everything. organize into separate files. no desktop and mobile separation probably.
+
+
+pages
+
+- new note (home page) /
+  - input field for note title
+  - textarea to write note body (no rich text)
+  - buttons at bottom of page
+    - save note to local storage
+    - save note to account
+    - download note as txt file
+  - note privacy option (only if saved to account)
+    - anyone with the link can see it
+    - only you can see it
+  - 
+
+- all notes /notes
+  - lists all notes you have saved in local storage
+  - has a buttons at the top
+    - download all notes as txt files
+    - save all local storage notes to account
+
+- signin /signin
+  - buttons at top of page to switch between signing in and signing up
+  - uses email and password
+  - signing up has confirmation field for password
+  - 
+
+- settings /settings
+  - account settings
+    - delete account
+    - delete all notes on account
+  - dark mode toggle (again for redundancy)
+
+
+- note page /note/:id
+  - url id param gets note's document id from firestore  
+  - 
