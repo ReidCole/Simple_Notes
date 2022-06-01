@@ -29,9 +29,10 @@ pages
 
 - all notes /notes
   - lists all notes you have saved in local storage
-  - has a buttons at the top
+  - has buttons at the top
     - download all notes as txt files
     - save all local storage notes to account
+    - delete all notes in local storage or on account or both
 
 - signin /signin
   - buttons at top of page to switch between signing in and signing up
@@ -42,7 +43,6 @@ pages
 - settings /settings
   - account settings
     - delete account
-    - delete all notes on account
   - dark mode toggle (again for redundancy)
 
 
