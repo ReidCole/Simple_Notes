@@ -29,10 +29,10 @@ const Navbar: React.FC = () => {
         href="/settings"
       />
       <button
-        className={`text-purple-600 text-3xl h-full flex items-center hover:text-black transition-colors`}
+        className={`text-purple-600 text-3xl flex items-center hover:text-black focus-visible:text-black focus-visible:outline-1 outline-black transition-colors p-1`}
         title="Toggle Dark Mode"
       >
-        <i className={`bi-moon`}></i>
+        <i className="bi-moon flex"></i>
       </button>
     </nav>
   );

@@ -7,6 +7,9 @@ module.exports = {
       xs: "450px",
       ...defaultTheme.screens,
     },
+    fontFamily: {
+      sans: ["Arial", "Segoe UI"],
+    },
   },
   plugins: [],
 };

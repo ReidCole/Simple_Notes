@@ -28,11 +28,23 @@ pages
   - 
 
 - all notes /notes
-  - lists all notes you have saved in local storage
+  - lists all notes you have saved in local storage and in account
+    - each note is listed as a link that takes you to the note page
+    - each note listing shows
+      - note title
+      - date created
+      - button to delete note + confirmation modal
   - has buttons at the top
     - download all notes as txt files
     - save all local storage notes to account
     - delete all notes in local storage or on account or both
+    - sort notes by
+      - date updated asc (default) 
+      - date updated desc
+      - alphabetical asc
+      - alphabetical desc
+      - date created asc
+      - date created desc
 
 - signin /signin
   - buttons at top of page to switch between signing in and signing up
@@ -48,4 +60,12 @@ pages
 
 - note page /note/:id
   - url id param gets note's document id from firestore  
-  - 
+  - can edit note if you own it
+  - can change visibility (link / private)
+
+other stuff
+- do tests with cypress after finishing each page
+  - new test file for each page
+  - they can navigate to the other pages, but they have to start on their respective page
+- use redux for all global state
+- make quick separate project to test redux stuff with firebase, then put it in notes app
