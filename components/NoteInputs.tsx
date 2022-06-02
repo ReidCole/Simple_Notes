@@ -1,17 +1,19 @@
-import { inputStyles } from "../styles/StyleStrings.js";
+import Input from "./Input";
 
 const NoteInputs = () => {
   return (
     <div className="mx-2 mb-2 h-full flex flex-col">
-      <input
+      <Input
         type="text"
         title="Note Title"
+        name="Note Title"
         placeholder="Title..."
-        className={inputStyles + "mb-2"}
+        className="mb-2"
       />
       <textarea
-        className={inputStyles + "h-full"}
+        className="bg-gray-200 w-full border border-gray-300 rounded-lg focus-visible:outline-none focus-visible:border-gray-600 resize-none p-2 transition-colors placeholder:text-gray-500 h-full"
         title="Note Body"
+        name="Note Body"
         placeholder="Body..."
       ></textarea>
     </div>
