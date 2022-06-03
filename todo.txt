@@ -50,7 +50,7 @@ pages
   - buttons at top of page to switch between signing in and signing up
   - uses email and password
   - signing up has confirmation field for password
-  - 
+  - include google sign in
 
 - settings /settings
   - account settings
@@ -69,3 +69,5 @@ other stuff
   - they can navigate to the other pages, but they have to start on their respective page
 - use redux for all global state
 - make quick separate project to test redux stuff with firebase, then put it in notes app
+- remove redux thunk
+- add fragments <></> around all pages and add head for title

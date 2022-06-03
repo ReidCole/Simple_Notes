@@ -1,13 +1,17 @@
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { NextPage } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import MainContainer from "../components/MainContainer";
 import Navbar from "../components/Navbar";
+import Notification from "../components/Notification";
 import PageHeading from "../components/PageHeading";
-import { signIn, signUp } from "../redux/authSlice";
+import useNotificationState from "../hooks/useNotificationState";
+import { auth } from "./_app";
 
 const SignIn: NextPage = () => {
   const [action, setAction] = useState<"signin" | "signup">("signin");
@@ -15,31 +19,36 @@ const SignIn: NextPage = () => {
   const [passwordValue, setPasswordValue] = useState("");
   const [confirmValue, setConfirmValue] = useState("");
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (emailValue.length > 0 && passwordValue.length > 0) {
-      if (action === "signin" || (action === "signup" && confirmValue.length > 0)) {
-        setCanSubmit(true);
-        console.log("true");
-        return;
-      }
-    }
-    setCanSubmit(false);
-    console.log("false");
-  }, [action, emailValue.length, passwordValue.length, confirmValue.length]);
+  const [notificationState, showNotification] = useNotificationState();
+  const router = useRouter();
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (action === "signin") {
       // SIGN IN
-      dispatch(signIn({ email: emailValue, password: passwordValue }));
+      signInWithEmailAndPassword(auth, emailValue, passwordValue)
+        .then(() => {
+          router.push("/");
+        })
+        .catch((err) => {
+          showNotification(err.message, "bg-red-400 border-red-500");
+        });
     } else {
       // SIGN UP
-      dispatch(signUp({ email: emailValue, password: passwordValue }));
+      createUserWithEmailAndPassword(auth, emailValue, passwordValue);
     }
   }
+
+  useEffect(() => {
+    if (emailValue.length > 0 && passwordValue.length > 0) {
+      if (action === "signin" || (action === "signup" && confirmValue.length > 0)) {
+        setCanSubmit(true);
+        return;
+      }
+    }
+    setCanSubmit(false);
+  }, [action, emailValue.length, passwordValue.length, confirmValue.length]);
 
   return (
     <MainContainer>
@@ -80,6 +89,16 @@ const SignIn: NextPage = () => {
           {action === "signin" ? "Sign In" : "Sign Up"}
         </Button>
       </form>
+
+      <button
+        className="bg-black text-white p-4"
+        onClick={() => {
+          showNotification("hello", "bg-green-400 border-green-500");
+        }}
+      >
+        test notif
+      </button>
+
       <Button
         className="bg-blue-500 text-white m-2"
         onClick={() => setAction((prev) => (prev === "signin" ? "signup" : "signin"))}
@@ -88,6 +107,8 @@ const SignIn: NextPage = () => {
       </Button>
 
       <Navbar />
+
+      <Notification state={notificationState} />
     </MainContainer>
   );
 };
