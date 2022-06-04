@@ -6,7 +6,6 @@ import { auth } from "../pages/_app";
 
 const Navbar: React.FC = () => {
   const user = useSelector((state: RootState) => state.auth.user);
-  console.log("user", user);
 
   return (
     <nav className="flex flex-row justify-evenly items-center bg-gray-200 border-t border-gray-300 h-12 w-full shrink-0">
@@ -37,7 +36,6 @@ const Navbar: React.FC = () => {
           colorClass="text-yellow-600"
           iconClass="box-arrow-left"
           title="Sign Out"
-          href="/signin"
           type="button"
           onClick={() => {
             signOut(auth);
@@ -52,12 +50,13 @@ const Navbar: React.FC = () => {
         href="/settings"
         type="link"
       />
-      <button
-        className={`text-purple-600 text-3xl flex items-center hover:text-black focus-visible:text-black focus-visible:outline-1 outline-black transition-colors p-1`}
+      <NavbarButton
+        colorClass="text-purple-600"
+        iconClass="moon"
+        type="button"
+        onClick={() => console.log("toggle dark mode")}
         title="Toggle Dark Mode"
-      >
-        <i className="bi-moon flex"></i>
-      </button>
+      />
     </nav>
   );
 };

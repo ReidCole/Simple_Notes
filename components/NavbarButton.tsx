@@ -4,7 +4,7 @@ type Props = {
   iconClass: string;
   title: string;
   colorClass: string;
-  href: string;
+  href?: string;
   type: "link" | "button";
   onClick?: () => void;
 };
@@ -12,7 +12,7 @@ type Props = {
 const NavbarLink: React.FC<Props> = ({ iconClass, title, colorClass, href, type, onClick }) => {
   if (type === "link") {
     return (
-      <Link passHref href={href}>
+      <Link passHref href={href || "#"}>
         <a
           className={`${colorClass} text-3xl flex items-center hover:text-black focus-visible:text-black focus-visible:outline-1 outline-black transition-colors p-1`}
           title={title}

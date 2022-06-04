@@ -14,7 +14,6 @@ const Notification: React.FC<Props> = ({ state }) => {
     setIsOpen(true);
     const timeout = setTimeout(() => {
       setIsOpen(false);
-      console.log("close");
     }, 5000);
     return () => {
       clearTimeout(timeout);

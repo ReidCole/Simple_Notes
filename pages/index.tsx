@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import { useContext, useEffect, useState } from "react";
 import Button from "../components/Button";
+import LoadingSpinner from "../components/LoadingSpinner";
 import MainContainer from "../components/MainContainer";
 import Navbar from "../components/Navbar";
 import NoteInputs from "../components/NoteInputs";
