@@ -1,19 +1,16 @@
-export type NoteListingType = {
-  title: string;
-  dateCreated: Date;
-  dateUpdated: Date;
-  noteId: string;
-};
+import { NoteType } from "../pages";
 
 type Props = {
-  note: NoteListingType;
+  note: NoteType;
 };
 
 const NoteListing: React.FC<Props> = ({ note }) => {
   return (
     <div className="p-1.5 rounded-lg bg-gray-200  border border-gray-300">
       <h2 className="text-lg">{note.title}</h2>
-      <p className="text-sm text-gray-600 italic">Last updated {note.dateUpdated.toString()}</p>
+      <p className="text-sm text-gray-600 italic">
+        Last updated {new Date(note.dateUpdated).toDateString()} (TODO: change to dayjs)
+      </p>
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -30,10 +31,34 @@ const SaveButtons: React.FC<Props> = ({ noteState }) => {
       dateCreated: new Date(Date.now()),
       dateUpdated: new Date(Date.now()),
       owner: "ls",
+      id: nanoid(),
     };
     notes.push(newNote);
     localStorage.setItem("notes", JSON.stringify(notes));
     router.push("/notes");
+  }
+
+  function spam() {
+    const notesString = localStorage.getItem("notes");
+    let notes;
+    if (notesString === null) {
+      notes = [];
+    } else {
+      notes = JSON.parse(notesString);
+    }
+    for (let i = 0; i < 10; i++) {
+      const newNote: NoteType = {
+        title: noteState.title,
+        body: noteState.body,
+        dateCreated: new Date(Date.now()),
+        dateUpdated: new Date(Date.now()),
+        owner: "ls",
+        id: nanoid(),
+      };
+      notes.push(newNote);
+      console.log("a");
+    }
+    localStorage.setItem("notes", JSON.stringify(notes));
   }
 
   return (
@@ -53,6 +78,13 @@ const SaveButtons: React.FC<Props> = ({ noteState }) => {
           title="Save Note to Browser Local Storage"
         >
           <i className="bi-window text-xl flex" /> Save To Browser Storage
+        </Button>
+        <Button
+          className="gap-2 bg-purple-500 text-white w-full"
+          onClick={spam}
+          title="Save Note to Browser Local Storage"
+        >
+          <i className="bi-window text-xl flex" /> SPAM
         </Button>
         <Button
           className="gap-2 bg-yellow-500 text-white w-full"

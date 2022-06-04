@@ -1,17 +1,26 @@
-import NoteListing, { NoteListingType } from "./NoteListing";
+import { NoteType } from "../pages";
+import NoteListing from "./NoteListing";
 
 type Props = {
-  notes: NoteListingType[];
+  notes: NoteType[];
+  heading: string;
 };
 
-const NotesList: React.FC<Props> = ({ notes }) => {
-  return (
-    <div className="h-full mx-2 overflow-y-scroll my-2 flex flex-col gap-2">
-      {notes.map((note) => (
-        <NoteListing note={note} key={note.noteId} />
-      ))}
-    </div>
-  );
+const NotesList: React.FC<Props> = ({ notes, heading }) => {
+  if (notes.length > 0) {
+    return (
+      <div className="p-2">
+        <h2 className="text-center font-bold">{heading}</h2>
+        <div className=" my-2 flex flex-col gap-2 h-full">
+          {notes.map((note) => (
+            <NoteListing note={note} key={note.id} />
+          ))}
+        </div>
+      </div>
+    );
+  } else {
+    return <p></p>;
+  }
 };
 
 export default NotesList;

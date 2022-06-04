@@ -1,4 +1,3 @@
-// export const AuthContext = React.createContext<AuthContextType | null>(null);
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -34,9 +33,5 @@ const AuthContainer: React.FC<Props> = ({ children }) => {
 
   return <>{children}</>;
 };
-
-// type AuthContextType = {
-
-// }
 
 export default AuthContainer;
