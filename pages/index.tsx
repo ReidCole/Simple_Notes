@@ -8,17 +8,26 @@ import NoteInputs from "../components/NoteInputs";
 import PageHeading from "../components/PageHeading";
 import SaveButtons from "../components/SaveButtons";
 import { UIContext } from "../context/UIContext";
+import useNoteState from "../hooks/useNoteState";
+
+export type NoteType = {
+  title: string;
+  body: string;
+  dateCreated: Date;
+  dateUpdated: Date;
+  owner: string;
+};
 
 const Home: NextPage = () => {
-  const uiContext = useContext(UIContext);
+  const noteState = useNoteState();
 
   return (
     <MainContainer>
       <PageHeading>New Note</PageHeading>
 
-      <NoteInputs />
+      <NoteInputs noteState={noteState} />
 
-      <SaveButtons />
+      <SaveButtons noteState={noteState} />
 
       <Navbar />
     </MainContainer>

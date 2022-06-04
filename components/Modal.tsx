@@ -54,7 +54,11 @@ const Modal: React.FC<Props> = ({ children, className, isOpen, setIsOpen, headin
         <div className="bg-white rounded-lg flex flex-col items-center gap-2 p-2">
           <div className="flex flex-row justify-between w-full items-center">
             <p className="font-bold text-lg">{heading}</p>{" "}
-            <button className="focus-visible:outline-black" onClick={() => close()}>
+            <button
+              className="focus-visible:outline-black"
+              onClick={() => close()}
+              title="Close Prompt"
+            >
               <i className="bi-x-circle-fill flex text-xl text-red-600" />
             </button>
           </div>

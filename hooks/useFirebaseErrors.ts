@@ -1,4 +1,4 @@
-function useFirebaseErrors() {
+const useFirebaseErrors = () => {
   function getFirebaseError(errorCode: any) {
     switch (errorCode) {
       case "auth/wrong-password":
@@ -25,6 +25,6 @@ function useFirebaseErrors() {
   }
 
   return getFirebaseError;
-}
+};
 
 export default useFirebaseErrors;
