@@ -3,6 +3,8 @@ import Tab from "./Tab";
 
 type Props = {
   tabs: TabType[];
+  activeIndex: number;
+  setActiveIndex(index: number): void;
 };
 
 type TabType = {
@@ -10,9 +12,7 @@ type TabType = {
   colorClass: string;
 };
 
-const Tabs: React.FC<Props> = ({ tabs }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-
+const Tabs: React.FC<Props> = ({ tabs, activeIndex, setActiveIndex }) => {
   return (
     <div className="w-full flex flex-row px-2 gap-2 border-b border-black h-16 items-end">
       {tabs.map((tab, index) => (
@@ -21,6 +21,7 @@ const Tabs: React.FC<Props> = ({ tabs }) => {
           text={tab.text}
           colorClass={tab.colorClass}
           isActive={activeIndex === index}
+          onClick={() => setActiveIndex(index)}
         />
       ))}
     </div>

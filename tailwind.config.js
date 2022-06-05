@@ -10,6 +10,11 @@ module.exports = {
     fontFamily: {
       sans: ["Arial", "Segoe UI"],
     },
+    extend: {
+      screens: {
+        "hover-hover": { raw: "(hover: hover)" },
+      },
+    },
   },
   plugins: [],
 };

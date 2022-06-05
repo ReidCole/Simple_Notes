@@ -11,7 +11,6 @@ const useNoteLists = () => {
       if (notesString !== null) {
         notes = JSON.parse(notesString);
       }
-      console.log(notes);
       const typedNotes: NoteType[] = notes.map(
         (note: {
           title: string;
