@@ -1,9 +1,11 @@
+import { doc, setDoc } from "firebase/firestore";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { NoteState } from "../hooks/useNoteState";
 import { NoteType } from "../pages";
+import { firestore } from "../pages/_app";
 import { RootState } from "../redux";
 import Button from "./Button";
 import Modal from "./Modal";
@@ -59,6 +61,28 @@ const SaveButtons: React.FC<Props> = ({ noteState }) => {
       console.log("a");
     }
     localStorage.setItem("notes", JSON.stringify(notes));
+  }
+
+  async function saveToAccount() {
+    console.log("todo: use loading spinner");
+
+    const newNote: NoteType = {
+      title: noteState.title,
+      body: noteState.body,
+      dateCreated: new Date(Date.now()),
+      dateUpdated: new Date(Date.now()),
+      owner: "ls",
+      id: nanoid(),
+    };
+
+    const id = nanoid();
+    const noteDoc = doc(firestore, "notes", id);
+    try {
+      await setDoc(noteDoc, newNote);
+    } catch (err) {
+      console.log(err);
+      console.log("todo: show notification");
+    }
   }
 
   return (

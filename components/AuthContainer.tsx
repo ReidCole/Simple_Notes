@@ -15,7 +15,6 @@ const AuthContainer: React.FC<Props> = ({ children }) => {
     onAuthStateChanged(
       auth,
       (user) => {
-        console.log("auth state changed", user);
         let payload;
         if (user === null) {
           payload = { user: null };

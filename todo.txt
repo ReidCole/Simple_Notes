@@ -67,7 +67,4 @@ other stuff
 - do tests with cypress after finishing each page
   - new test file for each page
   - they can navigate to the other pages, but they have to start on their respective page
-- use redux for all global state
-- make quick separate project to test redux stuff with firebase, then put it in notes app
-- remove redux thunk
 - add fragments <></> around all pages and add head for title

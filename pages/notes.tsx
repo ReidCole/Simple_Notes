@@ -15,7 +15,6 @@ const Notes: NextPage = () => {
   return (
     <MainContainer>
       <PageHeading>All Notes</PageHeading>
-      <NotesButtons />
       <Tabs
         tabs={[
           { text: "Browser Storage", colorClass: "bg-blue-500" },
@@ -24,10 +23,12 @@ const Notes: NextPage = () => {
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}
       />
-      <div className="h-full overflow-y-scroll my-2">
+      <div className="h-full overflow-y-scroll py-2 mb-2 border-black border-b">
         {activeIndex === 0 && <NotesList notes={localStorageNotes} />}
         {activeIndex === 1 && <NotesList notes={localStorageNotes} />}
       </div>
+
+      <NotesButtons />
 
       <Navbar />
     </MainContainer>

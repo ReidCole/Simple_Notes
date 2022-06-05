@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { store } from "../redux";
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, User } from "firebase/auth";
-import { actions as authActions } from "../redux/authReducer";
+import { getFirestore } from "firebase/firestore";
 import AuthContainer from "../components/AuthContainer";
 const firebaseConfig = {
   apiKey: "AIzaSyCkUS_we7xqr_q_9POaYDBiFd-J5x--pZ8",
@@ -18,6 +18,7 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const firestore = getFirestore(app);
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

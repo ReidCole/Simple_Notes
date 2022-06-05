@@ -22,7 +22,7 @@ const NoteListing: React.FC<Props> = ({ note }) => {
   const dateUpdated = dayjs().to(dayjs(note.dateCreated));
 
   return (
-    <Link href="#" passHref>
+    <Link href={`/note/${note.id}`} passHref>
       <a className="p-1.5 rounded-lg bg-gray-200 border border-gray-300 group hover:bg-black transition-colors">
         <h2 className="text-lg group-hover:text-white transition-colors">{note.title}</h2>
         <p className="text-sm text-gray-600 italic group-hover:text-gray-300 transition-colors">
