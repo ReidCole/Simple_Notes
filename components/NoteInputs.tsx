@@ -16,6 +16,7 @@ const NoteInputs: React.FC<Props> = ({ noteState }) => {
         className="mb-2"
         value={noteState.title}
         onChange={(e) => noteState.setTitle(e.target.value)}
+        autoComplete={false}
       />
       <textarea
         className="bg-gray-200 w-full border border-gray-300 rounded-lg focus-visible:outline-none focus-visible:border-gray-600 resize-none p-2 transition-colors placeholder:text-gray-500 h-full"
@@ -24,6 +25,7 @@ const NoteInputs: React.FC<Props> = ({ noteState }) => {
         placeholder="Body..."
         value={noteState.body}
         onChange={(e) => noteState.setBody(e.target.value)}
+        autoComplete="off"
       />
     </div>
   );

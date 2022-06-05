@@ -9,6 +9,7 @@ type Props = {
   onChange?: ChangeEventHandler<HTMLInputElement>;
   required?: boolean;
   name: string;
+  autoComplete?: boolean;
 };
 
 const Input: React.FC<Props> = ({
@@ -20,9 +21,11 @@ const Input: React.FC<Props> = ({
   onChange,
   required = false,
   name,
+  autoComplete = true,
 }) => {
   return (
     <input
+      autoComplete={autoComplete ? "on" : "off" || undefined}
       type={type}
       title={title}
       name={name}
