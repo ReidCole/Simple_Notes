@@ -17,8 +17,8 @@ const Notes: NextPage = () => {
       <PageHeading>All Notes</PageHeading>
       <Tabs
         tabs={[
-          { text: "Browser Storage", colorClass: "bg-blue-500" },
-          { text: "Account", colorClass: "bg-yellow-500" },
+          { text: "Browser Storage", colorClass: "bg-indigo-700" },
+          { text: "Account", colorClass: "bg-cyan-700" },
         ]}
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}

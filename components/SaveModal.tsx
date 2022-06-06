@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { NoteState } from "../hooks/useNoteState";
 import { firestore } from "../pages/_app";
 import { RootState } from "../redux";
-import { createNote, getCurrentLocalStorageNotes } from "../util/noteUtils";
+import { createNote, getCurrentLocalStorageNotes, saveNoteToLocalStorage } from "../util/noteUtils";
 import Button from "./Button";
 import LoadingSpinner from "./LoadingSpinner";
 import Modal from "./Modal";
@@ -24,10 +24,8 @@ const SaveModal: React.FC<Props> = ({ isModalOpen, noteState, setIsModalOpen }) 
   const router = useRouter();
 
   function saveToLocalStorage() {
-    const notes = getCurrentLocalStorageNotes();
     const newNote = createNote(noteState, "ls");
-    notes.push(newNote);
-    localStorage.setItem("notes", JSON.stringify(notes));
+    saveNoteToLocalStorage(newNote);
     router.push("/notes");
   }
 
@@ -56,21 +54,21 @@ const SaveModal: React.FC<Props> = ({ isModalOpen, noteState, setIsModalOpen }) 
     <>
       <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} heading="Save Note">
         <Button
-          className="gap-2 bg-blue-500 text-white w-full"
+          className="gap-1.5 bg-emerald-700 text-white w-full"
           onClick={saveToLocalStorage}
           title="Save Note to Browser Local Storage"
         >
           <i className="bi-window text-xl flex" /> Save To Browser Storage
         </Button>
         <Button
-          className="gap-2 bg-yellow-500 text-white w-full"
+          className="gap-1.5 bg-emerald-700 text-white w-full"
           onClick={saveToAccount}
           title="Save Note to Your Account"
         >
           <i className="bi-cloud text-xl" /> Save To Account
         </Button>
         <Button
-          className="gap-2 bg-red-500 text-white w-full"
+          className="gap-1.5 bg-emerald-700 text-white w-full"
           onClick={downloadNote}
           title="Download Note as a Text File"
         >

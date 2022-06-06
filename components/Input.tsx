@@ -34,7 +34,7 @@ const Input: React.FC<Props> = ({
       onChange={onChange}
       required={required}
       className={
-        "bg-gray-200 w-full border border-gray-300 rounded-lg focus-visible:outline-none focus-visible:border-gray-600 resize-none p-2 transition-colors placeholder:text-gray-500 " +
+        "bg-gray-200 w-full border border-gray-300 rounded-lg focus-visible:outline-none focus-visible:border-gray-700 resize-none p-2 transition-colors placeholder:text-gray-700 " +
         className
       }
     />

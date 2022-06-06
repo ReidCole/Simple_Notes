@@ -9,31 +9,12 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="flex flex-row justify-evenly items-center bg-gray-200 border-t border-gray-300 h-12 w-full shrink-0">
-      <NavbarButton
-        colorClass="text-green-600"
-        iconClass="file-earmark-plus"
-        title="New Note"
-        href="/"
-        type="link"
-      />
-      <NavbarButton
-        colorClass="text-blue-600"
-        iconClass="card-list"
-        title="View All Notes"
-        href="/notes"
-        type="link"
-      />
+      <NavbarButton iconClass="file-earmark-plus" title="New Note" href="/" type="link" />
+      <NavbarButton iconClass="card-list" title="View All Notes" href="/notes" type="link" />
       {user === null ? (
-        <NavbarButton
-          colorClass="text-yellow-600"
-          iconClass="person"
-          title="Sign In"
-          href="/signin"
-          type="link"
-        />
+        <NavbarButton iconClass="person" title="Sign In" href="/signin" type="link" />
       ) : (
         <NavbarButton
-          colorClass="text-yellow-600"
           iconClass="box-arrow-left"
           title="Sign Out"
           type="button"
@@ -43,15 +24,8 @@ const Navbar: React.FC = () => {
         />
       )}
 
+      <NavbarButton iconClass="gear" title="Settings" href="/settings" type="link" />
       <NavbarButton
-        colorClass="text-red-600"
-        iconClass="gear"
-        title="Settings"
-        href="/settings"
-        type="link"
-      />
-      <NavbarButton
-        colorClass="text-purple-600"
         iconClass="moon"
         type="button"
         onClick={() => console.log("toggle dark mode")}

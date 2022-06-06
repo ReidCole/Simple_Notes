@@ -1,17 +1,16 @@
 type Props = {
   text: string;
-  colorClass: string;
   isActive: boolean;
   onClick(): void;
 };
 
-const Tab: React.FC<Props> = ({ text, colorClass, isActive, onClick }) => {
+const Tab: React.FC<Props> = ({ text, isActive, onClick }) => {
   return (
     <button
       onClick={onClick}
       className={
         "text-white basis-full p-2 rounded-t-xl flex items-center justify-center transition-colors leading-4 focus-visible:outline-black " +
-        (isActive ? `h-12 ${colorClass}` : "h-10 bg-gray-400 hover:bg-black")
+        (isActive ? `h-12 bg-gray-700` : "h-10 bg-gray-400 hover:bg-black")
       }
     >
       {text}

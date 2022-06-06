@@ -29,7 +29,7 @@ const SignIn: NextPage = () => {
           setIsLoading(false);
         })
         .catch((err) => {
-          showNotification(getFirebaseAuthError(err.code), "bg-red-400 border-red-500");
+          showNotification(getFirebaseAuthError(err.code), "bg-red-400 border-red-700");
           setIsLoading(false);
         });
     } else {
@@ -41,7 +41,7 @@ const SignIn: NextPage = () => {
           setIsLoading(false);
         })
         .catch((err) => {
-          showNotification(getFirebaseAuthError(err.code), "bg-red-400 border-red-500");
+          showNotification(getFirebaseAuthError(err.code), "bg-red-400 border-red-700");
           setIsLoading(false);
         });
     }
@@ -54,7 +54,7 @@ const SignIn: NextPage = () => {
       <SignInForm action={action} onSubmit={onSubmit} />
 
       <Button
-        className="bg-blue-500 text-white m-2"
+        className="bg-indigo-700 text-white m-2"
         onClick={() => setAction((prev) => (prev === "signin" ? "signup" : "signin"))}
       >
         {action === "signin" ? "Need an account? Create one" : "Already have an account? Sign in"}

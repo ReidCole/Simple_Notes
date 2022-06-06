@@ -19,7 +19,7 @@ const NoteInputs: React.FC<Props> = ({ noteState }) => {
         autoComplete={false}
       />
       <textarea
-        className="bg-gray-200 w-full border border-gray-300 rounded-lg focus-visible:outline-none focus-visible:border-gray-600 resize-none p-2 transition-colors placeholder:text-gray-500 h-full"
+        className="bg-gray-200 w-full border border-gray-300 rounded-lg focus-visible:outline-none focus-visible:border-gray-700 resize-none p-2 transition-colors placeholder:text-gray-700 h-full"
         title="Note Body"
         name="Note Body"
         placeholder="Body..."

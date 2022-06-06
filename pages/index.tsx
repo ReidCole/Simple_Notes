@@ -6,13 +6,14 @@ import MainContainer from "../components/MainContainer";
 import Navbar from "../components/Navbar";
 import NoteInputs from "../components/NoteInputs";
 import PageHeading from "../components/PageHeading";
-import SaveButtons from "../components/SaveButtons";
+import SaveButton from "../components/SaveButton";
 import SaveModal from "../components/SaveModal";
+import VisibilityButton from "../components/VisibilityButton";
+import VisibilityModal from "../components/VisibilityModal";
 import useNoteState from "../hooks/useNoteState";
 
 const Home: NextPage = () => {
-  const noteState = useNoteState();
-  const [isSaveModalOpen, setIsSaveModalOpen] = useState<boolean>(false);
+  const noteState = useNoteState(undefined, true);
 
   return (
     <MainContainer>
@@ -21,22 +22,9 @@ const Home: NextPage = () => {
       <NoteInputs noteState={noteState} />
 
       <ButtonGroup>
-        <Button
-          className="gap-1.5"
-          enabledClasses="bg-green-500 text-white"
-          onClick={() => setIsSaveModalOpen(true)}
-          title="Save Note"
-          disabled={!noteState.isValid}
-        >
-          <i className="bi-save2 text-xl flex" /> Save Note
-        </Button>
+        <VisibilityButton noteState={noteState} />
+        <SaveButton noteState={noteState} />
       </ButtonGroup>
-
-      <SaveModal
-        isModalOpen={isSaveModalOpen}
-        setIsModalOpen={setIsSaveModalOpen}
-        noteState={noteState}
-      />
 
       <Navbar />
     </MainContainer>

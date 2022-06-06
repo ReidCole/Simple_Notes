@@ -50,7 +50,7 @@ export function createNote(noteState: NoteState, owner: string) {
     dateCreated: new Date(Date.now()),
     dateUpdated: new Date(Date.now()),
     owner: owner,
-    id: nanoid(),
+    id: noteState.id || nanoid(),
     visibility: noteState.visibility,
   };
   return newNote;
@@ -67,4 +67,17 @@ export function getCurrentLocalStorageNotes() {
     throw new Error("notes is undefined");
   }
   return typedNotes;
+}
+
+export function saveNoteToLocalStorage(note: NoteType) {
+  let notes = getCurrentLocalStorageNotes();
+  const index = notes.findIndex((n) => n.id === note.id);
+
+  if (index === -1) {
+    notes.push(note);
+  } else {
+    const index = notes.findIndex((n) => n.id === note.id);
+    notes[index] = note;
+  }
+  localStorage.setItem("notes", JSON.stringify(notes));
 }

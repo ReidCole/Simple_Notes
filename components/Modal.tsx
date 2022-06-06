@@ -59,7 +59,7 @@ const Modal: React.FC<Props> = ({ children, className, isOpen, setIsOpen, headin
               onClick={() => close()}
               title="Close Prompt"
             >
-              <i className="bi-x-circle-fill flex text-xl text-red-600" />
+              <i className="bi-x-circle-fill flex text-xl text-red-700" />
             </button>
           </div>
           {children}
