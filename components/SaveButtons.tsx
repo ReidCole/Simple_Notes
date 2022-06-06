@@ -24,40 +24,17 @@ const SaveButtons: React.FC<Props> = ({ noteState }) => {
 
   function saveToLocalStorage() {
     const notes = getCurrentLocalStorageNotes();
-    const newNote = createNote(noteState.title, noteState.body, "ls");
+    const newNote = createNote(noteState, "ls");
     notes.push(newNote);
     localStorage.setItem("notes", JSON.stringify(notes));
     router.push("/notes");
-  }
-
-  function spam() {
-    const notesString = localStorage.getItem("notes");
-    let notes;
-    if (notesString === null) {
-      notes = [];
-    } else {
-      notes = JSON.parse(notesString);
-    }
-    for (let i = 0; i < 10; i++) {
-      const newNote: NoteType = {
-        title: noteState.title,
-        body: noteState.body,
-        dateCreated: new Date(Date.now()),
-        dateUpdated: new Date(Date.now()),
-        owner: "ls",
-        id: nanoid(),
-      };
-      notes.push(newNote);
-      console.log("a");
-    }
-    localStorage.setItem("notes", JSON.stringify(notes));
   }
 
   async function saveToAccount() {
     if (user === null) return;
     setIsLoading(true);
 
-    const newNote = createNote(noteState.title, noteState.body, user.email);
+    const newNote = createNote(noteState, user.email);
 
     const id = nanoid();
     const noteDoc = doc(firestore, "notes", id);
@@ -70,12 +47,15 @@ const SaveButtons: React.FC<Props> = ({ noteState }) => {
     setIsLoading(false);
   }
 
-  function downloadNote() {}
+  function downloadNote() {
+    fileDownload(noteState.body, noteState.title, "text/plain");
+  }
 
   return (
-    <div className="mx-2 mb-2 flex flex-col items-center">
+    <>
       <Button
-        className="bg-green-500 text-white gap-1.5"
+        className="gap-1.5"
+        enabledClasses="bg-green-500 text-white"
         onClick={() => setIsModalOpen(true)}
         title="Save Note"
         disabled={!noteState.isValid}
@@ -92,13 +72,6 @@ const SaveButtons: React.FC<Props> = ({ noteState }) => {
           <i className="bi-window text-xl flex" /> Save To Browser Storage
         </Button>
         <Button
-          className="gap-2 bg-purple-500 text-white w-full"
-          onClick={spam}
-          title="Save Note to Browser Local Storage"
-        >
-          <i className="bi-window text-xl flex" /> SPAM
-        </Button>
-        <Button
           className="gap-2 bg-yellow-500 text-white w-full"
           onClick={saveToAccount}
           title="Save Note to Your Account"
@@ -107,7 +80,7 @@ const SaveButtons: React.FC<Props> = ({ noteState }) => {
         </Button>
         <Button
           className="gap-2 bg-red-500 text-white w-full"
-          onClick={() => {}}
+          onClick={downloadNote}
           title="Download Note as a Text File"
         >
           <i className="bi-download text-xl flex" /> Download as Text File
@@ -115,7 +88,7 @@ const SaveButtons: React.FC<Props> = ({ noteState }) => {
       </Modal>
 
       <LoadingSpinner isVisible={isLoading} />
-    </div>
+    </>
   );
 };
 

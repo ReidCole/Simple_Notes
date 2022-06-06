@@ -7,10 +7,12 @@ type Props = {
   title?: string;
   type?: "button" | "submit" | "reset" | undefined;
   disabled?: boolean;
+  enabledClasses?: string;
 };
 
 const Button: React.FC<Props> = ({
   className,
+  enabledClasses,
   children,
   onClick,
   title,
@@ -23,7 +25,9 @@ const Button: React.FC<Props> = ({
       className={
         className +
         " p-2 rounded-lg flex flex-row items-center justify-center transition-colors focus-visible:outline-black " +
-        (disabled ? "bg-gray-200 text-gray-500" : "hover:text-white hover:bg-black")
+        (disabled
+          ? "bg-gray-200 text-gray-500"
+          : `hover:text-white hover:hover-hover:bg-black ${enabledClasses}`)
       }
       title={title}
       type={type}

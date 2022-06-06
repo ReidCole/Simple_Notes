@@ -61,11 +61,7 @@ const SignInForm: React.FC<Props> = ({ onSubmit, action }) => {
         />
       )}
 
-      <Button
-        type="submit"
-        className={canSubmit ? "bg-green-600 text-white" : ""}
-        disabled={!canSubmit}
-      >
+      <Button type="submit" enabledClasses="bg-green-600 text-white" disabled={!canSubmit}>
         {action === "signin" ? "Sign In" : "Sign Up"}
       </Button>
     </form>

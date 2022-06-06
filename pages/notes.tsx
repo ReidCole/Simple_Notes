@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { useState } from "react";
 import MainContainer from "../components/MainContainer";
 import Navbar from "../components/Navbar";
-import NotesButtons from "../components/NotesButtons";
+import NotesButtons from "../components/NoteListButtons";
 import NotesList from "../components/NotesList";
 import PageHeading from "../components/PageHeading";
 import Tabs from "../components/Tabs";

@@ -1,4 +1,5 @@
 import { nanoid } from "nanoid";
+import { NoteState } from "../hooks/useNoteState";
 
 export type NoteType = {
   title: string;
@@ -7,6 +8,7 @@ export type NoteType = {
   dateUpdated: Date;
   owner: string;
   id: string;
+  visibility: "public" | "private";
 };
 
 export function typeNotes(notes: any): NoteType[] {
@@ -32,6 +34,7 @@ export function typeNote(note: any): NoteType {
       dateUpdated: new Date(note.dateUpdated),
       owner: note.owner,
       id: note.id,
+      visibility: note.visibility,
     };
     return typedNote;
   } catch (e) {
@@ -40,14 +43,15 @@ export function typeNote(note: any): NoteType {
   }
 }
 
-export function createNote(title: string, body: string, owner: string) {
+export function createNote(noteState: NoteState, owner: string) {
   const newNote: NoteType = {
-    title: title,
-    body: body,
+    title: noteState.title,
+    body: noteState.body,
     dateCreated: new Date(Date.now()),
     dateUpdated: new Date(Date.now()),
     owner: owner,
     id: nanoid(),
+    visibility: noteState.visibility,
   };
   return newNote;
 }

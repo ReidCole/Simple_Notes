@@ -10,7 +10,7 @@ const Tab: React.FC<Props> = ({ text, colorClass, isActive, onClick }) => {
     <button
       onClick={onClick}
       className={
-        "text-white basis-full p-2 rounded-t-xl flex items-center justify-center transition-colors leading-4 " +
+        "text-white basis-full p-2 rounded-t-xl flex items-center justify-center transition-colors leading-4 focus-visible:outline-black " +
         (isActive ? `h-12 ${colorClass}` : "h-10 bg-gray-400 hover:bg-black")
       }
     >

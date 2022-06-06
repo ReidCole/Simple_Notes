@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import ButtonGroup from "../components/ButtonGroup";
 import MainContainer from "../components/MainContainer";
 import Navbar from "../components/Navbar";
 import NoteInputs from "../components/NoteInputs";
@@ -15,7 +16,9 @@ const Home: NextPage = () => {
 
       <NoteInputs noteState={noteState} />
 
-      <SaveButtons noteState={noteState} />
+      <ButtonGroup>
+        <SaveButtons noteState={noteState} />
+      </ButtonGroup>
 
       <Navbar />
     </MainContainer>
