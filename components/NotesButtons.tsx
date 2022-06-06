@@ -2,7 +2,7 @@ import Button from "./Button";
 
 const NotesButtons = () => {
   return (
-    <div className="text-center mb-2 px-2 flex flex-col xs:flex-row gap-2 ">
+    <div className="text-center mb-2 px-2 flex flex-col xs:flex-row gap-2 justify-center ">
       <Button className="bg-gray-500 text-white gap-1" title="Delete All Notes">
         <i className="bi-filter text-xl flex" /> Sort By
       </Button>

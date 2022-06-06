@@ -1,4 +1,4 @@
-import { NoteType } from "../pages";
+import { NoteType } from "../util/noteUtils";
 import NoteListing from "./NoteListing";
 
 type Props = {

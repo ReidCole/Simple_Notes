@@ -63,8 +63,13 @@ pages
   - can edit note if you own it
   - can change visibility (link / private)
 
+
 other stuff
 - do tests with cypress after finishing each page
   - new test file for each page
   - they can navigate to the other pages, but they have to start on their respective page
 - add fragments <></> around all pages and add head for title
+
+
+current
+- add loading state and error states to note view page

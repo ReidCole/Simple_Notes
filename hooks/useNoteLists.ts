@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NoteType } from "../pages";
+import { NoteType, typeNotes } from "../util/noteUtils";
 
 const useNoteLists = () => {
   const [localStorageNotes, setLocalStorageNotes] = useState<NoteType[]>([]);
@@ -11,27 +11,8 @@ const useNoteLists = () => {
       if (notesString !== null) {
         notes = JSON.parse(notesString);
       }
-      const typedNotes: NoteType[] = notes.map(
-        (note: {
-          title: string;
-          body: string;
-          dateCreated: string;
-          dateUpdated: string;
-          owner: string;
-          id: string;
-        }) => {
-          const typedNote: NoteType = {
-            title: note.title,
-            body: note.body,
-            dateCreated: new Date(note.dateCreated),
-            dateUpdated: new Date(note.dateUpdated),
-            owner: note.owner,
-            id: note.id,
-          };
-          return typedNote;
-        }
-      );
-      setLocalStorageNotes(notes);
+      const typedNotes = typeNotes(notes);
+      setLocalStorageNotes(typedNotes);
     }
     window.addEventListener("storage", getLocalStorageLists);
     getLocalStorageLists();

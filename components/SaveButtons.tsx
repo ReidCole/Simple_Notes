@@ -4,11 +4,13 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { NoteState } from "../hooks/useNoteState";
-import { NoteType } from "../pages";
 import { firestore } from "../pages/_app";
 import { RootState } from "../redux";
+import { createNote, getCurrentLocalStorageNotes, NoteType } from "../util/noteUtils";
 import Button from "./Button";
+import LoadingSpinner from "./LoadingSpinner";
 import Modal from "./Modal";
+import fileDownload from "js-file-download";
 
 type Props = {
   noteState: NoteState;
@@ -16,25 +18,13 @@ type Props = {
 
 const SaveButtons: React.FC<Props> = ({ noteState }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const user = useSelector((state: RootState) => state.auth.user);
   const router = useRouter();
 
   function saveToLocalStorage() {
-    const notesString = localStorage.getItem("notes");
-    let notes;
-    if (notesString === null) {
-      notes = [];
-    } else {
-      notes = JSON.parse(notesString);
-    }
-    const newNote: NoteType = {
-      title: noteState.title,
-      body: noteState.body,
-      dateCreated: new Date(Date.now()),
-      dateUpdated: new Date(Date.now()),
-      owner: "ls",
-      id: nanoid(),
-    };
+    const notes = getCurrentLocalStorageNotes();
+    const newNote = createNote(noteState.title, noteState.body, "ls");
     notes.push(newNote);
     localStorage.setItem("notes", JSON.stringify(notes));
     router.push("/notes");
@@ -64,16 +54,10 @@ const SaveButtons: React.FC<Props> = ({ noteState }) => {
   }
 
   async function saveToAccount() {
-    console.log("todo: use loading spinner");
+    if (user === null) return;
+    setIsLoading(true);
 
-    const newNote: NoteType = {
-      title: noteState.title,
-      body: noteState.body,
-      dateCreated: new Date(Date.now()),
-      dateUpdated: new Date(Date.now()),
-      owner: "ls",
-      id: nanoid(),
-    };
+    const newNote = createNote(noteState.title, noteState.body, user.email);
 
     const id = nanoid();
     const noteDoc = doc(firestore, "notes", id);
@@ -83,7 +67,10 @@ const SaveButtons: React.FC<Props> = ({ noteState }) => {
       console.log(err);
       console.log("todo: show notification");
     }
+    setIsLoading(false);
   }
+
+  function downloadNote() {}
 
   return (
     <div className="mx-2 mb-2 flex flex-col items-center">
@@ -91,6 +78,7 @@ const SaveButtons: React.FC<Props> = ({ noteState }) => {
         className="bg-green-500 text-white gap-1.5"
         onClick={() => setIsModalOpen(true)}
         title="Save Note"
+        disabled={!noteState.isValid}
       >
         <i className="bi-save2 text-xl flex" /> Save Note
       </Button>
@@ -112,7 +100,7 @@ const SaveButtons: React.FC<Props> = ({ noteState }) => {
         </Button>
         <Button
           className="gap-2 bg-yellow-500 text-white w-full"
-          onClick={() => {}}
+          onClick={saveToAccount}
           title="Save Note to Your Account"
         >
           <i className="bi-cloud text-xl" /> Save To Account
@@ -125,6 +113,8 @@ const SaveButtons: React.FC<Props> = ({ noteState }) => {
           <i className="bi-download text-xl flex" /> Download as Text File
         </Button>
       </Modal>
+
+      <LoadingSpinner isVisible={isLoading} />
     </div>
   );
 };

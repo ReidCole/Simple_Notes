@@ -9,8 +9,8 @@ import Navbar from "../components/Navbar";
 import Notification from "../components/Notification";
 import PageHeading from "../components/PageHeading";
 import SignInForm from "../components/SignInForm";
-import useFirebaseErrors from "../hooks/useFirebaseErrors";
 import useNotificationState from "../hooks/useNotificationState";
+import { getFirebaseAuthError } from "../util/firebaseUtils";
 import { auth } from "./_app";
 
 const SignIn: NextPage = () => {
@@ -18,7 +18,6 @@ const SignIn: NextPage = () => {
   const [notificationState, showNotification] = useNotificationState();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
-  const getFirebaseError = useFirebaseErrors();
 
   function onSubmit(email: string, password: string) {
     if (action === "signin") {
@@ -30,7 +29,7 @@ const SignIn: NextPage = () => {
           setIsLoading(false);
         })
         .catch((err) => {
-          showNotification(getFirebaseError(err.code), "bg-red-400 border-red-500");
+          showNotification(getFirebaseAuthError(err.code), "bg-red-400 border-red-500");
           setIsLoading(false);
         });
     } else {
@@ -42,7 +41,7 @@ const SignIn: NextPage = () => {
           setIsLoading(false);
         })
         .catch((err) => {
-          showNotification(getFirebaseError(err.code), "bg-red-400 border-red-500");
+          showNotification(getFirebaseAuthError(err.code), "bg-red-400 border-red-500");
           setIsLoading(false);
         });
     }
