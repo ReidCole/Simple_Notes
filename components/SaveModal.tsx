@@ -1,18 +1,11 @@
-import { doc, setDoc } from "firebase/firestore";
 import fileDownload from "js-file-download";
-import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useNotificationState from "../hooks/useNotificationState";
-import { firestore } from "../pages/_app";
 import { RootState } from "../redux";
 import { noteActions } from "../redux/noteReducer";
-import {
-  getCurrentLocalStorageNotes,
-  saveNoteToAccount,
-  saveNoteToLocalStorage,
-} from "../util/noteUtils";
+import { saveNoteToAccount, saveNoteToLocalStorage } from "../util/noteUtils";
 import Button from "./Button";
 import LoadingSpinner from "./LoadingSpinner";
 import Modal from "./Modal";
@@ -51,6 +44,7 @@ const SaveModal: React.FC<Props> = ({ isModalOpen, setIsModalOpen }) => {
     try {
       await saveNoteToAccount(note, user.email);
       setIsLoading(false);
+      router.push("/notes");
     } catch (err) {
       showNotification(
         "Something went wrong. Please try again later.",

@@ -69,6 +69,7 @@ export function saveNoteToLocalStorage(note: NoteType) {
     notes[index] = newNote;
   }
   localStorage.setItem("notes", JSON.stringify(notes));
+  window.dispatchEvent(new Event("storage"));
 }
 
 export async function saveNoteToAccount(note: NoteType, email: string) {
@@ -93,10 +94,17 @@ function getNewNote(note: NoteType, owner: string) {
     owner: note.owner === "" ? owner : note.owner,
     id: note.id === "" ? nanoid() : note.id,
   };
-  console.log("get new note", note, newNote);
   return newNote;
 }
 
-export function deleteLocalStorageNote() {}
+export function deleteLocalStorageNote(id: string) {
+  const notes = getCurrentLocalStorageNotes();
+  const filteredNotes = notes.filter((n) => n.id !== id);
+  localStorage.setItem("notes", JSON.stringify(filteredNotes));
+  window.dispatchEvent(new Event("storage"));
+}
 
-export function deleteAllLocalStorageNotes() {}
+export function deleteAllLocalStorageNotes() {
+  localStorage.removeItem("notes");
+  window.dispatchEvent(new Event("storage"));
+}

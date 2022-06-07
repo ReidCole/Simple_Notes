@@ -24,7 +24,7 @@ const Notification: React.FC<Props> = ({ state }) => {
     <div className="fixed bottom-12 w-full flex flex-col items-center justify-center p-2 pointer-events-none z-20">
       <div
         className={
-          "border-4 rounded-lg shadow-2xl shadow-black p-2 text-white max-w-sm transition-transform " +
+          "border-4 rounded-lg shadow-2xl shadow-black p-2 text-white max-w-sm transition-transform bg-opacity-90 " +
           (isOpen ? "translate-y-0 " : "translate-y-36 ") +
           state.styles
         }

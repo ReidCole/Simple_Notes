@@ -15,13 +15,13 @@ const SignInForm: React.FC<Props> = ({ onSubmit, action }) => {
 
   useEffect(() => {
     if (emailValue.length > 0 && passwordValue.length > 0) {
-      if (action === "signin" || (action === "signup" && confirmValue.length > 0)) {
+      if (action === "signin" || (action === "signup" && confirmValue === passwordValue)) {
         setCanSubmit(true);
         return;
       }
     }
     setCanSubmit(false);
-  }, [action, emailValue.length, passwordValue.length, confirmValue.length]);
+  }, [action, emailValue.length, passwordValue, confirmValue]);
 
   return (
     <form
