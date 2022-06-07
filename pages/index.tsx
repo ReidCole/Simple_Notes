@@ -1,29 +1,34 @@
 import type { NextPage } from "next";
-import { useState } from "react";
-import Button from "../components/Button";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ButtonGroup from "../components/ButtonGroup";
 import MainContainer from "../components/MainContainer";
 import Navbar from "../components/Navbar";
 import NoteInputs from "../components/NoteInputs";
 import PageHeading from "../components/PageHeading";
 import SaveButton from "../components/SaveButton";
-import SaveModal from "../components/SaveModal";
 import VisibilityButton from "../components/VisibilityButton";
-import VisibilityModal from "../components/VisibilityModal";
-import useNoteState from "../hooks/useNoteState";
+import { RootState } from "../redux";
+import { noteActions } from "../redux/noteReducer";
 
 const Home: NextPage = () => {
-  const noteState = useNoteState(undefined, true);
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.auth.user);
+
+  useEffect(() => {
+    dispatch({ type: noteActions.clearNote });
+  }, [dispatch]);
 
   return (
     <MainContainer>
       <PageHeading>New Note</PageHeading>
 
-      <NoteInputs noteState={noteState} />
+      <NoteInputs />
 
       <ButtonGroup>
-        <VisibilityButton noteState={noteState} />
-        <SaveButton noteState={noteState} />
+        {user !== null && <VisibilityButton />}
+
+        <SaveButton />
       </ButtonGroup>
 
       <Navbar />

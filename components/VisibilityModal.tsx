@@ -1,20 +1,23 @@
-import { NoteState } from "../hooks/useNoteState";
+import { useDispatch } from "react-redux";
+import { noteActions } from "../redux/noteReducer";
 import Button from "./Button";
 import Modal from "./Modal";
 
 type Props = {
   isModalOpen: boolean;
   setIsModalOpen(val: boolean): void;
-  noteState: NoteState;
 };
 
-const VisibilityModal: React.FC<Props> = ({ isModalOpen, noteState, setIsModalOpen }) => {
+const VisibilityModal: React.FC<Props> = ({ isModalOpen, setIsModalOpen }) => {
+  // const note = useSelector((state: RootState) => state.note);
+  const dispatch = useDispatch();
+
   return (
     <Modal heading="Set Note Visibility" isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
       <Button
         className="gap-1.5 bg-purple-700 text-white w-full"
         onClick={() => {
-          noteState.setVisibility("public");
+          dispatch({ type: noteActions.setVisibility, payload: "public" });
           setIsModalOpen(false);
         }}
         title="Anyone with the link can see this note"
@@ -24,7 +27,7 @@ const VisibilityModal: React.FC<Props> = ({ isModalOpen, noteState, setIsModalOp
       <Button
         className="gap-1.5 bg-purple-700 text-white w-full"
         onClick={() => {
-          noteState.setVisibility("private");
+          dispatch({ type: noteActions.setVisibility, payload: "private" });
           setIsModalOpen(false);
         }}
         title="Only you can see this note"

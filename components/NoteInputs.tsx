@@ -1,11 +1,13 @@
-import { NoteState } from "../hooks/useNoteState";
+import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux";
+import { noteActions } from "../redux/noteReducer";
 import Input from "./Input";
 
-type Props = {
-  noteState: NoteState;
-};
+const NoteInputs: React.FC = () => {
+  const note = useSelector((state: RootState) => state.note.currentNote);
+  const dispatch = useDispatch();
 
-const NoteInputs: React.FC<Props> = ({ noteState }) => {
   return (
     <div className="mx-2 mb-2 h-full flex flex-col">
       <Input
@@ -14,8 +16,8 @@ const NoteInputs: React.FC<Props> = ({ noteState }) => {
         name="Note Title"
         placeholder="Title..."
         className="mb-2"
-        value={noteState.title}
-        onChange={(e) => noteState.setTitle(e.target.value)}
+        value={note.title}
+        onChange={(e) => dispatch({ type: noteActions.setTitle, payload: e.target.value })}
         autoComplete={false}
       />
       <textarea
@@ -23,8 +25,8 @@ const NoteInputs: React.FC<Props> = ({ noteState }) => {
         title="Note Body"
         name="Note Body"
         placeholder="Body..."
-        value={noteState.body}
-        onChange={(e) => noteState.setBody(e.target.value)}
+        value={note.body}
+        onChange={(e) => dispatch({ type: noteActions.setBody, payload: e.target.value })}
         autoComplete="off"
       />
     </div>

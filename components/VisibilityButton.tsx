@@ -1,14 +1,12 @@
 import { useState } from "react";
-import { NoteState } from "../hooks/useNoteState";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux";
 import Button from "./Button";
 import VisibilityModal from "./VisibilityModal";
 
-type Props = {
-  noteState: NoteState;
-};
-
-const VisibilityButton: React.FC<Props> = ({ noteState }) => {
+const VisibilityButton: React.FC = () => {
   const [isVisibilityModalOpen, setIsVisibilityModalOpen] = useState<boolean>(false);
+  const note = useSelector((state: RootState) => state.note.currentNote);
 
   return (
     <>
@@ -18,7 +16,7 @@ const VisibilityButton: React.FC<Props> = ({ noteState }) => {
         onClick={() => setIsVisibilityModalOpen(true)}
         title="Change Note Visibility"
       >
-        {noteState.visibility === "public" ? (
+        {note.visibility === "public" ? (
           <>
             <i className="bi-eye text-xl flex" /> Note Visiblity: Public
           </>
@@ -31,7 +29,6 @@ const VisibilityButton: React.FC<Props> = ({ noteState }) => {
       <VisibilityModal
         isModalOpen={isVisibilityModalOpen}
         setIsModalOpen={setIsVisibilityModalOpen}
-        noteState={noteState}
       />
     </>
   );

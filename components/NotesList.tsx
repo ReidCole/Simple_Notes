@@ -3,9 +3,10 @@ import NoteListing from "./NoteListing";
 
 type Props = {
   notes: NoteType[];
+  listName: string;
 };
 
-const NotesList: React.FC<Props> = ({ notes }) => {
+const NotesList: React.FC<Props> = ({ notes, listName }) => {
   if (notes.length > 0) {
     return (
       <div className="px-2 w-full">
@@ -17,7 +18,9 @@ const NotesList: React.FC<Props> = ({ notes }) => {
       </div>
     );
   } else {
-    return <p></p>;
+    return (
+      <p className="p-2 text-center text-xl font-bold text-gray-700">No notes in {listName}</p>
+    );
   }
 };
 

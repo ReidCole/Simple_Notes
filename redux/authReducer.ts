@@ -13,7 +13,7 @@ const initialState: AuthState = {
 
 export default function authReducer(state = initialState, action: any) {
   switch (action.type) {
-    case actions.setUser:
+    case authActions.setUser:
       const newState: AuthState = {
         user: action.payload.user,
       };
@@ -23,6 +23,6 @@ export default function authReducer(state = initialState, action: any) {
   }
 }
 
-export const actions = {
+export const authActions = {
   setUser: "auth/setUser",
 };

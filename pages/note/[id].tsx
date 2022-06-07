@@ -2,21 +2,24 @@ import { doc, getDoc } from "firebase/firestore";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import MainContainer from "../../components/MainContainer";
 import Navbar from "../../components/Navbar";
 import NoteButtons from "../../components/NoteButtons";
 import NoteInputs from "../../components/NoteInputs";
 import PageHeading from "../../components/PageHeading";
-import useNoteState from "../../hooks/useNoteState";
+import { RootState } from "../../redux";
+import { noteActions } from "../../redux/noteReducer";
 import { getCurrentLocalStorageNotes, NoteType, typeNote, typeNotes } from "../../util/noteUtils";
 import { firestore } from "../_app";
 
 const Note: NextPage = () => {
   const router = useRouter();
-  const [note, setNote] = useState<NoteType | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const noteState = useNoteState(note, false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const currentNote = useSelector((state: RootState) => state.note.currentNote);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function getNoteFromAccount(id: string) {
@@ -31,7 +34,7 @@ const Note: NextPage = () => {
       const data = snapshot.data();
       const newNote = typeNote(data);
       setIsLoading(false);
-      setNote(newNote);
+      dispatch({ type: noteActions.setNote, payload: newNote });
     }
 
     function getNoteFromLocalStorage(id: string) {
@@ -41,7 +44,7 @@ const Note: NextPage = () => {
         console.error("todo: couldn't find note in local storage");
         return;
       }
-      setNote(newNote);
+      dispatch({ type: noteActions.setNote, payload: newNote });
     }
 
     const id = router.query.id;
@@ -53,34 +56,28 @@ const Note: NextPage = () => {
     } else {
       getNoteFromLocalStorage(id);
     }
-  }, [router.query]);
+  }, [router.query, dispatch]);
 
   return (
     <MainContainer>
-      {note === null ? (
-        <div className="h-full">
-          <h1>Note is null</h1>
-        </div>
-      ) : (
-        <>
-          <PageHeading>View Note</PageHeading>
+      <>
+        <PageHeading>View Note</PageHeading>
 
-          {noteState.isEditing ? (
-            <NoteInputs noteState={noteState} />
-          ) : (
-            <>
-              <div className="px-2 flex flex-col h-full">
-                <h2 className="p-2 font-bold text-xl border-b-2 border-gray-300">
-                  {noteState.title}
-                </h2>
-                <p className="p-2 rounded-lg">{noteState.body}</p>
-              </div>
-            </>
-          )}
+        {isEditing ? (
+          <NoteInputs />
+        ) : (
+          <>
+            <div className="px-2 flex flex-col h-full">
+              <h2 className="p-2 font-bold text-xl border-b-2 border-gray-300">
+                {currentNote.title}
+              </h2>
+              <p className="p-2 rounded-lg">{currentNote.body}</p>
+            </div>
+          </>
+        )}
 
-          <NoteButtons noteState={noteState} />
-        </>
-      )}
+        <NoteButtons isEditing={isEditing} setIsEditing={setIsEditing} />
+      </>
 
       <Navbar />
 

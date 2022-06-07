@@ -1,14 +1,21 @@
-import { useState } from "react";
-import { NoteState } from "../hooks/useNoteState";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux";
 import Button from "./Button";
 import SaveModal from "./SaveModal";
 
-type Props = {
-  noteState: NoteState;
-};
-
-const SaveButton: React.FC<Props> = ({ noteState }) => {
+const SaveButton: React.FC = () => {
   const [isSaveModalOpen, setIsSaveModalOpen] = useState<boolean>(false);
+  const [isValid, setIsValid] = useState<boolean>(false);
+  const note = useSelector((state: RootState) => state.note.currentNote);
+
+  useEffect(() => {
+    if (note.title.length > 0 && note.body.length > 0) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+  }, [note.title, note.body]);
 
   return (
     <>
@@ -17,16 +24,12 @@ const SaveButton: React.FC<Props> = ({ noteState }) => {
         enabledClasses="bg-emerald-700 text-white"
         onClick={() => setIsSaveModalOpen(true)}
         title="Save Note"
-        disabled={!noteState.isValid}
+        disabled={!isValid}
       >
         <i className="bi-save2 text-xl flex" /> Save Note
       </Button>
 
-      <SaveModal
-        isModalOpen={isSaveModalOpen}
-        setIsModalOpen={setIsSaveModalOpen}
-        noteState={noteState}
-      />
+      <SaveModal isModalOpen={isSaveModalOpen} setIsModalOpen={setIsSaveModalOpen} />
     </>
   );
 };

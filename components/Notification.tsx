@@ -21,7 +21,7 @@ const Notification: React.FC<Props> = ({ state }) => {
   }, [state.count]);
 
   return (
-    <div className="fixed bottom-0 w-full flex flex-col items-center justify-center p-2 pointer-events-none">
+    <div className="fixed bottom-12 w-full flex flex-col items-center justify-center p-2 pointer-events-none z-20">
       <div
         className={
           "border-4 rounded-lg shadow-2xl shadow-black p-2 text-white max-w-sm transition-transform " +

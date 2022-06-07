@@ -1,46 +1,60 @@
-import { NoteState } from "../hooks/useNoteState";
-import { createNote, saveNoteToLocalStorage } from "../util/noteUtils";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux";
+import { noteActions } from "../redux/noteReducer";
+import { saveNoteToLocalStorage } from "../util/noteUtils";
 import Button from "./Button";
 import ButtonGroup from "./ButtonGroup";
 import SaveButton from "./SaveButton";
 import VisibilityButton from "./VisibilityButton";
 
 type Props = {
-  noteState: NoteState;
+  isEditing: boolean;
+  setIsEditing(val: boolean): void;
 };
 
-const NoteButtons: React.FC<Props> = ({ noteState }) => {
+const NoteButtons: React.FC<Props> = ({ isEditing, setIsEditing }) => {
+  const note = useSelector((state: RootState) => state.note.currentNote);
+  const [isValid, setIsValid] = useState<boolean>(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (note.title.length > 0 && note.body.length > 0) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+  }, [note.title, note.body]);
+
   function saveChanges() {
-    if (noteState.owner === "ls") {
-      const newNote = createNote(noteState, "ls");
-      console.log(noteState, newNote.id);
-      saveNoteToLocalStorage(newNote);
+    if (note.owner === "ls") {
+      saveNoteToLocalStorage(note);
     } else {
       // save to account
       // show loading screen
       // update in firestore
     }
 
-    noteState.saveChanges();
-    noteState.setIsEditing(false);
+    dispatch({ type: noteActions.saveChanges });
+    setIsEditing(false);
   }
 
   function cancelChanges() {
-    noteState.revertChanges();
-    noteState.setIsEditing(false);
+    dispatch({ type: noteActions.revertChanges });
+    setIsEditing(false);
   }
 
   return (
     <ButtonGroup>
-      {noteState.isEditing ? (
+      {isEditing ? (
         <>
-          <VisibilityButton noteState={noteState} />
+          <VisibilityButton />
           <Button
             className="gap-1.5"
             enabledClasses="bg-cyan-700 text-white"
             onClick={saveChanges}
             title="Edit Note"
-            disabled={!noteState.isValid}
+            disabled={!isValid}
           >
             <i className="bi-save2 text-xl flex" /> Save Changes
           </Button>
@@ -59,13 +73,13 @@ const NoteButtons: React.FC<Props> = ({ noteState }) => {
             className="gap-1.5"
             enabledClasses="bg-cyan-700 text-white"
             onClick={() => {
-              noteState.setIsEditing(true);
+              setIsEditing(true);
             }}
             title="Edit Note"
           >
             <i className="bi-pencil text-xl flex" /> Edit Note
           </Button>
-          <SaveButton noteState={noteState} />
+          <SaveButton />
         </>
       )}
     </ButtonGroup>

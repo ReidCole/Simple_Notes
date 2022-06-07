@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export const UIContext = React.createContext<ContextValue>({
+export const UIContext = React.createContext<ContextType>({
   windowHeight: 0,
 });
 
@@ -29,7 +29,7 @@ const UIContextProvider: React.FC<Props> = ({ children }) => {
   return <UIContext.Provider value={value}>{children}</UIContext.Provider>;
 };
 
-type ContextValue = {
+type ContextType = {
   windowHeight: number;
 };
 

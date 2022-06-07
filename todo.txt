@@ -62,6 +62,7 @@ pages
   - url id param gets note's document id from firestore  
   - can edit note if you own it
   - can change visibility (link / private)
+  - can copy or move note to different locations
 
 
 other stuff

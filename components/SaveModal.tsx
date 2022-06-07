@@ -3,51 +3,65 @@ import fileDownload from "js-file-download";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { NoteState } from "../hooks/useNoteState";
+import { useDispatch, useSelector } from "react-redux";
+import useNotificationState from "../hooks/useNotificationState";
 import { firestore } from "../pages/_app";
 import { RootState } from "../redux";
-import { createNote, getCurrentLocalStorageNotes, saveNoteToLocalStorage } from "../util/noteUtils";
+import { noteActions } from "../redux/noteReducer";
+import {
+  getCurrentLocalStorageNotes,
+  saveNoteToAccount,
+  saveNoteToLocalStorage,
+} from "../util/noteUtils";
 import Button from "./Button";
 import LoadingSpinner from "./LoadingSpinner";
 import Modal from "./Modal";
+import Notification from "./Notification";
 
 type Props = {
   isModalOpen: boolean;
   setIsModalOpen(val: boolean): void;
-  noteState: NoteState;
 };
 
-const SaveModal: React.FC<Props> = ({ isModalOpen, noteState, setIsModalOpen }) => {
+const SaveModal: React.FC<Props> = ({ isModalOpen, setIsModalOpen }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const user = useSelector((state: RootState) => state.auth.user);
+  const note = useSelector((state: RootState) => state.note.currentNote);
   const router = useRouter();
+  const dispatch = useDispatch();
+  const [notificationState, showNotification] = useNotificationState();
 
   function saveToLocalStorage() {
-    const newNote = createNote(noteState, "ls");
-    saveNoteToLocalStorage(newNote);
+    saveNoteToLocalStorage(note);
+    dispatch({ type: noteActions.clearNote });
     router.push("/notes");
   }
 
   async function saveToAccount() {
-    if (user === null) return;
+    if (user === null) {
+      showNotification(
+        "You must be signed in to save to your account.",
+        "bg-red-400 border-red-500"
+      );
+      return;
+    }
+
     setIsLoading(true);
 
-    const newNote = createNote(noteState, user.email);
-
-    const id = nanoid();
-    const noteDoc = doc(firestore, "notes", id);
     try {
-      await setDoc(noteDoc, newNote);
+      await saveNoteToAccount(note, user.email);
+      setIsLoading(false);
     } catch (err) {
-      console.log(err);
-      console.log("todo: show notification");
+      showNotification(
+        "Something went wrong. Please try again later.",
+        "bg-red-400 border-red-500"
+      );
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
 
   function downloadNote() {
-    fileDownload(noteState.body, noteState.title, "text/plain");
+    fileDownload(note.body, note.title, "text/plain");
   }
 
   return (
@@ -77,6 +91,8 @@ const SaveModal: React.FC<Props> = ({ isModalOpen, noteState, setIsModalOpen }) 
       </Modal>
 
       <LoadingSpinner isVisible={isLoading} />
+
+      <Notification state={notificationState} />
     </>
   );
 };

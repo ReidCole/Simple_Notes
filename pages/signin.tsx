@@ -29,7 +29,7 @@ const SignIn: NextPage = () => {
           setIsLoading(false);
         })
         .catch((err) => {
-          showNotification(getFirebaseAuthError(err.code), "bg-red-400 border-red-700");
+          showNotification(getFirebaseAuthError(err.code), "bg-red-400 border-red-500");
           setIsLoading(false);
         });
     } else {

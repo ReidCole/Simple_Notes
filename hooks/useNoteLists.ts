@@ -1,8 +1,14 @@
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { firestore } from "../pages/_app";
+import { RootState } from "../redux";
 import { NoteType, typeNotes } from "../util/noteUtils";
 
 const useNoteLists = () => {
   const [localStorageNotes, setLocalStorageNotes] = useState<NoteType[]>([]);
+  const [accountNotes, setAccountNotes] = useState<NoteType[]>([]);
+  const user = useSelector((state: RootState) => state.auth.user);
 
   useEffect(() => {
     function getLocalStorageLists() {
@@ -20,7 +26,19 @@ const useNoteLists = () => {
     return () => window.removeEventListener("storage", getLocalStorageLists);
   }, []);
 
-  return [localStorageNotes];
+  useEffect(() => {
+    if (user === null) return;
+    const q = query(collection(firestore, "notes"), where("owner", "==", user.email));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const notes: any[] = [];
+      snapshot.forEach((doc) => notes.push(doc.data()));
+      const typedNotes = typeNotes(notes);
+      setAccountNotes(typedNotes);
+    });
+    return () => unsubscribe();
+  }, [user]);
+
+  return [localStorageNotes, accountNotes];
 };
 
 export default useNoteLists;
