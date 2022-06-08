@@ -10,7 +10,7 @@ type Props = {
 
 const NoteListing: React.FC<Props> = ({ note }) => {
   dayjs.extend(relativeTime);
-  const dateUpdated = dayjs().to(dayjs(note.dateCreated));
+  const dateUpdated = dayjs().to(dayjs(note.dateUpdated));
 
   return (
     <Link href={`/note/${note.id}${note.owner === "ls" ? "?local=true" : ""}`} passHref>

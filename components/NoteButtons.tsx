@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import useNotificationState from "../hooks/useNotificationState";
 import { RootState } from "../redux";
 import { noteActions } from "../redux/noteReducer";
-import { saveNoteToLocalStorage } from "../util/noteUtils";
+import { deleteAccountNote, saveNoteToAccount, saveNoteToLocalStorage } from "../util/noteUtils";
 import Button from "./Button";
 import ButtonGroup from "./ButtonGroup";
+import LoadingSpinner from "./LoadingSpinner";
+import Modal from "./Modal";
+import Notification from "./Notification";
 import SaveButton from "./SaveButton";
 import VisibilityButton from "./VisibilityButton";
 
@@ -16,7 +20,11 @@ type Props = {
 const NoteButtons: React.FC<Props> = ({ isEditing, setIsEditing }) => {
   const note = useSelector((state: RootState) => state.note.currentNote);
   const [isValid, setIsValid] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
+  const [notificationState, showNotification] = useNotificationState();
+  const [deleteModalShowing, setDeleteModalShowing] = useState<boolean>(false);
 
   useEffect(() => {
     if (note.title.length > 0 && note.body.length > 0) {
@@ -26,13 +34,21 @@ const NoteButtons: React.FC<Props> = ({ isEditing, setIsEditing }) => {
     }
   }, [note.title, note.body]);
 
-  function saveChanges() {
+  async function saveChanges() {
     if (note.owner === "ls") {
       saveNoteToLocalStorage(note);
     } else {
-      // save to account
-      // show loading screen
-      // update in firestore
+      if (user === null) {
+        console.error("tried to save note changes to account when not signed in.");
+        showNotification(
+          "Something went wrong. Please try again later.",
+          "bg-red-400 border-red-500"
+        );
+        return;
+      }
+      setIsLoading(true);
+      await saveNoteToAccount(note, user.email);
+      setIsLoading(false);
     }
 
     dispatch({ type: noteActions.saveChanges });
@@ -44,45 +60,87 @@ const NoteButtons: React.FC<Props> = ({ isEditing, setIsEditing }) => {
     setIsEditing(false);
   }
 
+  async function deleteNote() {
+    try {
+      setIsLoading(true);
+      await deleteAccountNote(note.id);
+      setIsLoading(false);
+    } catch (e) {
+      showNotification(
+        "Something went wrong while deleting the note. Please try again later.",
+        "bg-red-400 border-red-500"
+      );
+      setIsLoading(false);
+    }
+  }
+
   return (
-    <ButtonGroup>
-      {isEditing ? (
-        <>
-          <VisibilityButton />
-          <Button
-            className="gap-1.5"
-            enabledClasses="bg-cyan-700 text-white"
-            onClick={saveChanges}
-            title="Edit Note"
-            disabled={!isValid}
-          >
-            <i className="bi-save2 text-xl flex" /> Save Changes
-          </Button>
-          <Button
-            className="gap-1.5"
-            enabledClasses="bg-red-700 text-white"
-            onClick={cancelChanges}
-            title="Edit Note"
-          >
-            <i className="bi-x-circle text-xl flex" /> Cancel
-          </Button>
-        </>
-      ) : (
-        <>
-          <Button
-            className="gap-1.5"
-            enabledClasses="bg-cyan-700 text-white"
-            onClick={() => {
-              setIsEditing(true);
-            }}
-            title="Edit Note"
-          >
-            <i className="bi-pencil text-xl flex" /> Edit Note
-          </Button>
-          <SaveButton />
-        </>
-      )}
-    </ButtonGroup>
+    <>
+      <ButtonGroup>
+        {isEditing ? (
+          <>
+            {note.owner !== "ls" && <VisibilityButton />}
+
+            <Button
+              className="gap-1.5"
+              enabledClasses="bg-cyan-700 text-white"
+              onClick={saveChanges}
+              title="Edit Note"
+              disabled={!isValid}
+            >
+              <i className="bi-save2 text-xl flex" /> Save Changes
+            </Button>
+            <Button
+              className="gap-1.5"
+              enabledClasses="bg-red-700 text-white"
+              onClick={cancelChanges}
+              title="Edit Note"
+            >
+              <i className="bi-x-circle text-xl flex" /> Cancel
+            </Button>
+          </>
+        ) : (
+          <>
+            {(note.owner === "ls" || (user && user.email === note.owner)) && (
+              <>
+                <Button
+                  className="gap-1"
+                  enabledClasses="bg-cyan-700 text-white"
+                  onClick={() => {
+                    setIsEditing(true);
+                  }}
+                  title="Edit Note"
+                >
+                  <i className="bi-pencil text-xl flex" /> Edit
+                </Button>
+                <Button
+                  className="gap-1.5"
+                  enabledClasses="bg-red-700 text-white"
+                  onClick={() => setDeleteModalShowing(true)}
+                  title="Delete Note"
+                >
+                  <i className="bi-trash text-xl flex" /> Delete
+                </Button>
+              </>
+            )}
+          </>
+        )}
+      </ButtonGroup>
+      <Notification state={notificationState} />
+      <LoadingSpinner isVisible={isLoading} />
+
+      <Modal isOpen={deleteModalShowing} setIsOpen={setDeleteModalShowing} heading="Delete Note">
+        <p>This action cannot be undone</p>
+        <Button
+          className="gap-1.5"
+          enabledClasses="bg-red-700 text-white"
+          onClick={deleteNote}
+          title="Delete Note"
+        >
+          <i className="bi-trash text-xl flex" /> Confirm Delete
+        </Button>
+      </Modal>
+    </>
   );
 };
 

@@ -4,6 +4,8 @@ import Button from "./Button";
 import Modal from "./Modal";
 
 const DeleteAllButton = () => {
+  // not recommended by firebase, so not implementing
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   function deleteFromLocalStorage() {

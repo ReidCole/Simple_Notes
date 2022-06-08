@@ -5,7 +5,7 @@ import { useState } from "react";
 import Button from "../components/Button";
 import LoadingSpinner from "../components/LoadingSpinner";
 import MainContainer from "../components/MainContainer";
-import Navbar from "../components/Navbar";
+import MobileNavbar from "../components/MobileNavbar";
 import Notification from "../components/Notification";
 import PageHeading from "../components/PageHeading";
 import SignInForm from "../components/SignInForm";
@@ -60,7 +60,7 @@ const SignIn: NextPage = () => {
         {action === "signin" ? "Need an account? Create one" : "Already have an account? Sign in"}
       </Button>
 
-      <Navbar />
+      <MobileNavbar />
 
       <Notification state={notificationState} />
 

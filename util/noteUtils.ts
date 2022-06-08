@@ -1,6 +1,15 @@
-import { doc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import {
+  AuthCredential,
+  deleteUser,
+  EmailAuthCredential,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  signInWithEmailAndPassword,
+  User,
+} from "firebase/auth";
 import { nanoid } from "nanoid";
-import { firestore } from "../pages/_app";
+import { auth, firestore } from "../pages/_app";
 
 export type NoteType = {
   title: string;
@@ -107,4 +116,17 @@ export function deleteLocalStorageNote(id: string) {
 export function deleteAllLocalStorageNotes() {
   localStorage.removeItem("notes");
   window.dispatchEvent(new Event("storage"));
+}
+
+export async function deleteAccountNote(id: string) {
+  await deleteDoc(doc(firestore, `notes/${id}`));
+}
+
+export async function deleteAccount(email: string, password: string) {
+  try {
+    const cred = await signInWithEmailAndPassword(auth, email, password);
+    await deleteUser(cred.user);
+  } catch (e) {
+    throw e;
+  }
 }

@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MainContainer from "../components/MainContainer";
-import Navbar from "../components/Navbar";
+import MobileNavbar from "../components/MobileNavbar";
 import NotesButtons from "../components/NoteListButtons";
 import NotesList from "../components/NotesList";
 import PageHeading from "../components/PageHeading";
@@ -40,7 +40,7 @@ const Notes: NextPage = () => {
 
       <NotesButtons />
 
-      <Navbar />
+      <MobileNavbar />
     </MainContainer>
   );
 };

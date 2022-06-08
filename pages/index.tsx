@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonGroup from "../components/ButtonGroup";
 import MainContainer from "../components/MainContainer";
-import Navbar from "../components/Navbar";
+import MobileNavbar from "../components/MobileNavbar";
 import NoteInputs from "../components/NoteInputs";
 import PageHeading from "../components/PageHeading";
 import SaveButton from "../components/SaveButton";
@@ -31,7 +31,7 @@ const Home: NextPage = () => {
         <SaveButton />
       </ButtonGroup>
 
-      <Navbar />
+      <MobileNavbar />
     </MainContainer>
   );
 };

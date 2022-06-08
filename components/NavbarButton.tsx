@@ -14,7 +14,7 @@ const NavbarLink: React.FC<Props> = ({ iconClass, title, href, type, onClick }) 
       <Link passHref href={href || "#"}>
         <a
           className={
-            "text-3xl flex items-center hover:hover-hover:bg-black hover:hover-hover:text-white rounded-lg focus-visible:outline-1 outline-black transition-colors p-1.5"
+            "text-3xl flex items-center basis-full h-full justify-center hover:hover-hover:bg-black hover:hover-hover:text-white  focus-visible:outline-1 outline-black transition-colors p-1.5"
           }
           title={title}
         >
@@ -26,7 +26,7 @@ const NavbarLink: React.FC<Props> = ({ iconClass, title, href, type, onClick }) 
     return (
       <button
         className={
-          "text-3xl flex items-center hover:hover-hover:bg-black hover:hover-hover:text-white rounded-lg focus-visible:outline-1 outline-black transition-colors p-1.5"
+          "text-3xl flex items-center basis-full h-full justify-center hover:hover-hover:bg-black hover:hover-hover:text-white focus-visible:outline-1 outline-black transition-colors p-1.5"
         }
         onClick={onClick}
         title={title}

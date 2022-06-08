@@ -4,7 +4,7 @@ import { RootState, store } from "../redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../pages/_app";
 
-const Navbar: React.FC = () => {
+const MobileNavbar: React.FC = () => {
   const user = useSelector((state: RootState) => state.auth.user);
 
   return (
@@ -25,14 +25,8 @@ const Navbar: React.FC = () => {
       )}
 
       <NavbarButton iconClass="gear" title="Settings" href="/settings" type="link" />
-      <NavbarButton
-        iconClass="moon"
-        type="button"
-        onClick={() => console.log("toggle dark mode")}
-        title="Toggle Dark Mode"
-      />
     </nav>
   );
 };
 
-export default Navbar;
+export default MobileNavbar;
