@@ -40,24 +40,22 @@ const Notes: NextPage = () => {
 
       <MainContainer>
         <NavbarDesktop />
-        <WidthContainer>
-          <PageHeading>All Notes</PageHeading>
-          <Tabs
-            tabs={
-              user === null
-                ? [{ text: "Browser Storage" }]
-                : [{ text: "Browser Storage" }, { text: "Account" }]
-            }
-            activeIndex={activeIndex}
-            setActiveIndex={setActiveIndex}
-          />
-          <div className="overflow-y-scroll h-full flex flex-col my-2">
-            {activeIndex === 0 && (
-              <NotesList notes={sortedLocalStorageNotes} listName="Browser Storage" />
-            )}
-            {activeIndex === 1 && <NotesList notes={sortedAccountNotes} listName="Account" />}
-          </div>
-        </WidthContainer>
+        <PageHeading>All Notes</PageHeading>
+        <Tabs
+          tabs={
+            user === null
+              ? [{ text: "Browser Storage" }]
+              : [{ text: "Browser Storage" }, { text: "Account" }]
+          }
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+        />
+        <div className="overflow-y-auto h-full flex flex-col my-2 md:max-w-xl md:mx-auto w-full">
+          {activeIndex === 0 && (
+            <NotesList notes={sortedLocalStorageNotes} listName="Browser Storage" />
+          )}
+          {activeIndex === 1 && <NotesList notes={sortedAccountNotes} listName="Account" />}
+        </div>
 
         <NavbarMobile />
       </MainContainer>
