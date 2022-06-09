@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MainContainer from "../components/MainContainer";
 import MobileNavbar from "../components/MobileNavbar";
@@ -10,12 +10,20 @@ import Tabs from "../components/Tabs";
 import useNoteLists from "../hooks/useNoteLists";
 import { RootState } from "../redux";
 import { noteActions } from "../redux/noteReducer";
+import { NoteType } from "../util/noteUtils";
 
 const Notes: NextPage = () => {
-  const [localStorageNotes, accountLists] = useNoteLists();
+  const [localStorageNotes, accountNotes] = useNoteLists();
   const [activeIndex, setActiveIndex] = useState(0);
   const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
+
+  const sortedLocalStorageNotes: NoteType[] = useMemo(() => {
+    return localStorageNotes.slice().sort((a, b) => b.dateUpdated - a.dateUpdated);
+  }, [localStorageNotes]);
+  const sortedAccountNotes: NoteType[] = useMemo(() => {
+    return accountNotes.slice().sort((a, b) => b.dateUpdated - a.dateUpdated);
+  }, [accountNotes]);
 
   useEffect(() => {
     dispatch({ type: noteActions.clearNote });
@@ -33,9 +41,11 @@ const Notes: NextPage = () => {
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}
       />
-      <div className="h-full overflow-y-scroll py-2 mb-2 border-black border-b">
-        {activeIndex === 0 && <NotesList notes={localStorageNotes} listName="Browser Storage" />}
-        {activeIndex === 1 && <NotesList notes={accountLists} listName="Account" />}
+      <div className="h-full overflow-y-scroll py-2 mb-2">
+        {activeIndex === 0 && (
+          <NotesList notes={sortedLocalStorageNotes} listName="Browser Storage" />
+        )}
+        {activeIndex === 1 && <NotesList notes={sortedAccountNotes} listName="Account" />}
       </div>
 
       <NotesButtons />

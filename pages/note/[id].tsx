@@ -50,7 +50,6 @@ const Note: NextPage = () => {
             errorMsg = "Something went wrong while loading this note.";
             break;
         }
-        console.log(e.code);
         setError(errorMsg);
       }
     }

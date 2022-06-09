@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useNotificationState from "../hooks/useNotificationState";
@@ -25,6 +26,7 @@ const NoteButtons: React.FC<Props> = ({ isEditing, setIsEditing }) => {
   const dispatch = useDispatch();
   const [notificationState, showNotification] = useNotificationState();
   const [deleteModalShowing, setDeleteModalShowing] = useState<boolean>(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (note.title.length > 0 && note.body.length > 0) {
@@ -65,6 +67,7 @@ const NoteButtons: React.FC<Props> = ({ isEditing, setIsEditing }) => {
       setIsLoading(true);
       await deleteAccountNote(note.id);
       setIsLoading(false);
+      router.push("/notes");
     } catch (e) {
       showNotification(
         "Something went wrong while deleting the note. Please try again later.",

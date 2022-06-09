@@ -27,7 +27,10 @@ const useNoteLists = () => {
   }, []);
 
   useEffect(() => {
-    if (user === null) return;
+    if (user === null) {
+      setAccountNotes([]);
+      return;
+    }
     const q = query(collection(firestore, "notes"), where("owner", "==", user.email));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const notes: any[] = [];

@@ -23,8 +23,9 @@ const Notification: React.FC<Props> = ({ state }) => {
   return (
     <div className="fixed bottom-12 w-full flex flex-col items-center justify-center p-2 pointer-events-none z-20">
       <div
+        onClick={() => setIsOpen(false)}
         className={
-          "border-4 rounded-lg shadow-2xl shadow-black p-2 text-white max-w-sm transition-transform bg-opacity-90 " +
+          "border-4 rounded-lg shadow-2xl shadow-black p-2 text-white max-w-sm transition-transform bg-opacity-90 pointer-events-auto cursor-pointer " +
           (isOpen ? "translate-y-0 " : "translate-y-36 ") +
           state.styles
         }
