@@ -1,9 +1,10 @@
 import type { NextPage } from "next";
+import Head from "next/head";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonGroup from "../components/ButtonGroup";
 import MainContainer from "../components/MainContainer";
-import MobileNavbar from "../components/MobileNavbar";
+import NavbarMobile from "../components/NavbarMobile";
 import NoteInputs from "../components/NoteInputs";
 import PageHeading from "../components/PageHeading";
 import SaveButton from "../components/SaveButton";
@@ -20,19 +21,25 @@ const Home: NextPage = () => {
   }, [dispatch]);
 
   return (
-    <MainContainer>
-      <PageHeading>New Note</PageHeading>
+    <>
+      <Head>
+        <title>New Note - Simple Notes</title>
+      </Head>
 
-      <NoteInputs />
+      <MainContainer>
+        <PageHeading>New Note</PageHeading>
 
-      <ButtonGroup>
-        {user !== null && <VisibilityButton />}
+        <NoteInputs />
 
-        <SaveButton />
-      </ButtonGroup>
+        <ButtonGroup>
+          {user !== null && <VisibilityButton />}
 
-      <MobileNavbar />
-    </MainContainer>
+          <SaveButton />
+        </ButtonGroup>
+
+        <NavbarMobile />
+      </MainContainer>
+    </>
   );
 };
 

@@ -1,11 +1,12 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Button from "../components/Button";
 import LoadingSpinner from "../components/LoadingSpinner";
 import MainContainer from "../components/MainContainer";
-import MobileNavbar from "../components/MobileNavbar";
+import NavbarMobile from "../components/NavbarMobile";
 import Notification from "../components/Notification";
 import PageHeading from "../components/PageHeading";
 import SignInForm from "../components/SignInForm";
@@ -48,24 +49,30 @@ const SignIn: NextPage = () => {
   }
 
   return (
-    <MainContainer>
-      <PageHeading>{action === "signin" ? "Sign In" : "Create Account"}</PageHeading>
+    <>
+      <Head>
+        <title>Sign In - Simple Notes</title>
+      </Head>
 
-      <SignInForm action={action} onSubmit={onSubmit} />
+      <MainContainer>
+        <PageHeading>{action === "signin" ? "Sign In" : "Create Account"}</PageHeading>
 
-      <Button
-        className="bg-indigo-700 text-white m-2"
-        onClick={() => setAction((prev) => (prev === "signin" ? "signup" : "signin"))}
-      >
-        {action === "signin" ? "Need an account? Create one" : "Already have an account? Sign in"}
-      </Button>
+        <SignInForm action={action} onSubmit={onSubmit} />
 
-      <MobileNavbar />
+        <Button
+          className="bg-indigo-700 text-white m-2"
+          onClick={() => setAction((prev) => (prev === "signin" ? "signup" : "signin"))}
+        >
+          {action === "signin" ? "Need an account? Create one" : "Already have an account? Sign in"}
+        </Button>
 
-      <Notification state={notificationState} />
+        <NavbarMobile />
 
-      <LoadingSpinner isVisible={isLoading} />
-    </MainContainer>
+        <Notification state={notificationState} />
+
+        <LoadingSpinner isVisible={isLoading} />
+      </MainContainer>
+    </>
   );
 };
 

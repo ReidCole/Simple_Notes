@@ -15,7 +15,9 @@ const NoteListing: React.FC<Props> = ({ note }) => {
   return (
     <Link href={`/note/${note.id}${note.owner === "ls" ? "?local=true" : ""}`} passHref>
       <a className="p-1.5 rounded-lg bg-gray-200 border border-gray-300 group hover:bg-black hover:border-black transition-colors focus-visible:outline-black">
-        <h2 className="text-lg group-hover:text-white transition-colors">{note.title}</h2>
+        <h2 className="text-lg group-hover:text-white transition-colors whitespace-nowrap overflow-x-hidden">
+          {note.title}
+        </h2>
         <p className="text-sm text-gray-700 italic group-hover:text-gray-300 transition-colors">
           Updated {dateUpdated}
         </p>

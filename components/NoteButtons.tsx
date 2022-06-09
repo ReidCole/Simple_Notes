@@ -4,7 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import useNotificationState from "../hooks/useNotificationState";
 import { RootState } from "../redux";
 import { noteActions } from "../redux/noteReducer";
-import { deleteAccountNote, saveNoteToAccount, saveNoteToLocalStorage } from "../util/noteUtils";
+import {
+  deleteAccountNote,
+  deleteLocalStorageNote,
+  saveNoteToAccount,
+  saveNoteToLocalStorage,
+} from "../util/noteUtils";
 import Button from "./Button";
 import ButtonGroup from "./ButtonGroup";
 import LoadingSpinner from "./LoadingSpinner";
@@ -63,17 +68,22 @@ const NoteButtons: React.FC<Props> = ({ isEditing, setIsEditing }) => {
   }
 
   async function deleteNote() {
-    try {
-      setIsLoading(true);
-      await deleteAccountNote(note.id);
-      setIsLoading(false);
+    if (note.owner === "ls") {
+      deleteLocalStorageNote(note.id);
       router.push("/notes");
-    } catch (e) {
-      showNotification(
-        "Something went wrong while deleting the note. Please try again later.",
-        "bg-red-400 border-red-500"
-      );
-      setIsLoading(false);
+    } else {
+      try {
+        setIsLoading(true);
+        await deleteAccountNote(note.id);
+        setIsLoading(false);
+        router.push("/notes");
+      } catch (e) {
+        showNotification(
+          "Something went wrong while deleting the note. Please try again later.",
+          "bg-red-400 border-red-500"
+        );
+        setIsLoading(false);
+      }
     }
   }
 

@@ -1,17 +1,16 @@
 import dayjs from "dayjs";
 import { doc, getDoc } from "firebase/firestore";
 import { NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import MainContainer from "../../components/MainContainer";
-import MobileNavbar from "../../components/MobileNavbar";
+import NavbarMobile from "../../components/NavbarMobile";
 import NoteButtons from "../../components/NoteButtons";
 import NoteInputs from "../../components/NoteInputs";
-import Notification from "../../components/Notification";
 import PageHeading from "../../components/PageHeading";
-import useNotificationState from "../../hooks/useNotificationState";
 import { RootState } from "../../redux";
 import { noteActions } from "../../redux/noteReducer";
 import { getCurrentLocalStorageNotes, NoteType, typeNote, typeNotes } from "../../util/noteUtils";
@@ -79,41 +78,52 @@ const Note: NextPage = () => {
     return (
       <MainContainer>
         <div className="bg-red-500 p-4 text-white text-center">{error}</div>
-        <div className="h-full"></div>
-        <MobileNavbar />
+        <div className="h-full" />
+        <NavbarMobile />
       </MainContainer>
     );
   }
 
   return (
-    <MainContainer>
-      <>
-        <PageHeading>View Note</PageHeading>
+    <>
+      <Head>
+        <title>{currentNote.title} - Simple Notes</title>
+      </Head>
 
-        {isEditing ? (
-          <NoteInputs />
-        ) : (
-          <>
-            <div className="px-2 flex flex-col">
-              <h2 className="px-2 pb-1 font-bold text-xl">{currentNote.title}</h2>
-              <p className="px-2 mb-1 text-sm italic text-gray-600 border-gray-300">
-                Created by {currentNote.owner == "ls" ? "You (Browser Storage)" : currentNote.owner}{" "}
-                on {dayjs(currentNote.dateCreated).toString()}
-              </p>
-            </div>
-            <div className="m-2 p-1 bg-gray-200 border border-gray-300 h-full overflow-y-scroll">
-              <p className="p-2 rounded-lg">{currentNote.body}</p>
-            </div>
-          </>
-        )}
+      <MainContainer>
+        <>
+          <PageHeading>View Note</PageHeading>
 
-        <NoteButtons isEditing={isEditing} setIsEditing={setIsEditing} />
-      </>
+          {isEditing ? (
+            <NoteInputs />
+          ) : (
+            <>
+              <div className="px-2 flex flex-col">
+                <h2 className="px-2 pb-1 font-bold text-xl overflow-x-auto whitespace-nowrap">
+                  {currentNote.title}
+                </h2>
+                <p className="px-2 mb-1 text-sm italic text-gray-600 border-gray-300">
+                  Created by{" "}
+                  {currentNote.owner == "ls" ? "you (Browser Storage)" : currentNote.owner} on{" "}
+                  {dayjs(currentNote.dateCreated).toString()}
+                </p>
+              </div>
+              <div className="m-2 p-1 bg-gray-200 border border-gray-300 h-full overflow-y-auto">
+                <pre className="p-2 rounded-lg break-words overflow-x-auto whitespace-pre-wrap font-sans">
+                  {currentNote.body}
+                </pre>
+              </div>
+            </>
+          )}
 
-      <MobileNavbar />
+          <NoteButtons isEditing={isEditing} setIsEditing={setIsEditing} />
+        </>
 
-      <LoadingSpinner isVisible={isLoading} />
-    </MainContainer>
+        <NavbarMobile />
+
+        <LoadingSpinner isVisible={isLoading} />
+      </MainContainer>
+    </>
   );
 };
 
