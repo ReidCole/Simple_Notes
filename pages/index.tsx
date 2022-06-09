@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonGroup from "../components/ButtonGroup";
 import MainContainer from "../components/MainContainer";
+import NavbarDesktop from "../components/NavbarDesktop";
 import NavbarMobile from "../components/NavbarMobile";
 import NoteInputs from "../components/NoteInputs";
 import PageHeading from "../components/PageHeading";
@@ -27,6 +28,8 @@ const Home: NextPage = () => {
       </Head>
 
       <MainContainer>
+        <NavbarDesktop />
+
         <PageHeading>New Note</PageHeading>
 
         <NoteInputs />

@@ -16,6 +16,7 @@ import PageHeading from "../components/PageHeading";
 import useNotificationState from "../hooks/useNotificationState";
 import { RootState } from "../redux";
 import { deleteAccount, deleteAllLocalStorageNotes } from "../util/noteUtils";
+import NavbarDesktop from "../components/NavbarDesktop";
 
 const Settings: NextPage = () => {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -66,8 +67,9 @@ const Settings: NextPage = () => {
       </Head>
 
       <MainContainer>
+        <NavbarDesktop />
         <PageHeading>Settings</PageHeading>
-        <div className="p-2 flex flex-col items-center h-full">
+        <div className="px-2 flex flex-col items-center h-full">
           <p className="mb-2 bg-gray-200 p-2 border border-gray-300">
             {user ? `Signed in as ${user.email}` : "Not signed in"}
           </p>

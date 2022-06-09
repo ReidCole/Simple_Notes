@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import MainContainer from "../../components/MainContainer";
+import NavbarDesktop from "../../components/NavbarDesktop";
 import NavbarMobile from "../../components/NavbarMobile";
 import NoteButtons from "../../components/NoteButtons";
 import NoteInputs from "../../components/NoteInputs";
@@ -91,33 +92,32 @@ const Note: NextPage = () => {
       </Head>
 
       <MainContainer>
-        <>
-          <PageHeading>View Note</PageHeading>
+        <NavbarDesktop />
 
-          {isEditing ? (
-            <NoteInputs />
-          ) : (
-            <>
-              <div className="px-2 flex flex-col">
-                <h2 className="px-2 pb-1 font-bold text-xl overflow-x-auto whitespace-nowrap">
-                  {currentNote.title}
-                </h2>
-                <p className="px-2 mb-1 text-sm italic text-gray-600 border-gray-300">
-                  Created by{" "}
-                  {currentNote.owner == "ls" ? "you (Browser Storage)" : currentNote.owner} on{" "}
-                  {dayjs(currentNote.dateCreated).toString()}
-                </p>
-              </div>
-              <div className="m-2 p-1 bg-gray-200 border border-gray-300 h-full overflow-y-auto">
-                <pre className="p-2 rounded-lg break-words overflow-x-auto whitespace-pre-wrap font-sans">
-                  {currentNote.body}
-                </pre>
-              </div>
-            </>
-          )}
+        <PageHeading>View Note</PageHeading>
 
-          <NoteButtons isEditing={isEditing} setIsEditing={setIsEditing} />
-        </>
+        {isEditing ? (
+          <NoteInputs />
+        ) : (
+          <>
+            <div className="px-2 flex flex-col">
+              <h2 className="px-2 pb-1 font-bold text-xl overflow-x-auto whitespace-nowrap">
+                {currentNote.title}
+              </h2>
+              <p className="px-2 mb-1 text-sm italic text-gray-600 border-gray-300">
+                Created by {currentNote.owner == "ls" ? "you (Browser Storage)" : currentNote.owner}{" "}
+                on {dayjs(currentNote.dateCreated).toString()}
+              </p>
+            </div>
+            <div className="m-2 p-1 bg-gray-200 border border-gray-300 h-full overflow-y-auto">
+              <pre className="p-2 rounded-lg break-words overflow-x-auto whitespace-pre-wrap font-sans">
+                {currentNote.body}
+              </pre>
+            </div>
+          </>
+        )}
+
+        <NoteButtons isEditing={isEditing} setIsEditing={setIsEditing} />
 
         <NavbarMobile />
 

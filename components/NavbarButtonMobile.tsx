@@ -8,7 +8,7 @@ type Props = {
   onClick?: () => void;
 };
 
-const NavbarLink: React.FC<Props> = ({ iconClass, title, href, type, onClick }) => {
+const NavbarButtonMobile: React.FC<Props> = ({ iconClass, title, href, type, onClick }) => {
   if (type === "link") {
     return (
       <Link passHref href={href || "#"}>
@@ -37,4 +37,4 @@ const NavbarLink: React.FC<Props> = ({ iconClass, title, href, type, onClick }) 
   }
 };
 
-export default NavbarLink;
+export default NavbarButtonMobile;

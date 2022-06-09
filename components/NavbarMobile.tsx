@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import NavbarButton from "./NavbarButton";
+import NavbarButtonMobile from "./NavbarButtonMobile";
 import { RootState, store } from "../redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../pages/_app";
@@ -16,20 +16,19 @@ const NavbarMobile: React.FC = () => {
   const router = useRouter();
 
   return (
-    <nav className="flex flex-row justify-evenly items-center bg-gray-200 border-t border-gray-300 h-12 w-full shrink-0">
-      <NavbarButton iconClass="file-earmark-plus" title="New Note" href="/" type="link" />
-      <NavbarButton iconClass="card-list" title="View All Notes" href="/notes" type="link" />
+    <nav className="flex flex-row justify-evenly items-center bg-gray-200 border-t border-gray-300 h-12 w-full shrink-0 md:hidden">
+      <NavbarButtonMobile iconClass="file-earmark-plus" title="New Note" href="/" type="link" />
+      <NavbarButtonMobile iconClass="card-list" title="View All Notes" href="/notes" type="link" />
       {user === null ? (
-        <NavbarButton iconClass="person" title="Sign In" href="/signin" type="link" />
+        <NavbarButtonMobile iconClass="person" title="Sign In" href="/signin" type="link" />
       ) : (
-        <NavbarButton
+        <NavbarButtonMobile
           iconClass="box-arrow-left"
           title="Sign Out"
           type="button"
           onClick={async () => {
             setIsLoading(true);
             try {
-              throw "chee";
               await signOut(auth);
               router.reload();
             } catch (e) {
@@ -44,7 +43,7 @@ const NavbarMobile: React.FC = () => {
         />
       )}
 
-      <NavbarButton iconClass="gear" title="Settings" href="/settings" type="link" />
+      <NavbarButtonMobile iconClass="gear" title="Settings" href="/settings" type="link" />
 
       <LoadingSpinner isVisible={isLoading} />
 

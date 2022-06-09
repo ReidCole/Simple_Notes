@@ -6,6 +6,7 @@ import { useState } from "react";
 import Button from "../components/Button";
 import LoadingSpinner from "../components/LoadingSpinner";
 import MainContainer from "../components/MainContainer";
+import NavbarDesktop from "../components/NavbarDesktop";
 import NavbarMobile from "../components/NavbarMobile";
 import Notification from "../components/Notification";
 import PageHeading from "../components/PageHeading";
@@ -55,6 +56,7 @@ const SignIn: NextPage = () => {
       </Head>
 
       <MainContainer>
+        <NavbarDesktop />
         <PageHeading>{action === "signin" ? "Sign In" : "Create Account"}</PageHeading>
 
         <SignInForm action={action} onSubmit={onSubmit} />

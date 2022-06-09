@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MainContainer from "../components/MainContainer";
+import NavbarDesktop from "../components/NavbarDesktop";
 import NavbarMobile from "../components/NavbarMobile";
 import NotesButtons from "../components/NoteListButtons";
 import NotesList from "../components/NotesList";
@@ -37,6 +38,7 @@ const Notes: NextPage = () => {
       </Head>
 
       <MainContainer>
+        <NavbarDesktop />
         <PageHeading>All Notes</PageHeading>
         <Tabs
           tabs={
