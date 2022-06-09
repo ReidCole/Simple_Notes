@@ -79,6 +79,7 @@ const Note: NextPage = () => {
   if (error.length > 0) {
     return (
       <MainContainer>
+        <NavbarDesktop />
         <div className="bg-red-500 p-4 text-white text-center">{error}</div>
         <div className="h-full" />
         <NavbarMobile />
