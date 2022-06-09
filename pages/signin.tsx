@@ -11,6 +11,7 @@ import NavbarMobile from "../components/NavbarMobile";
 import Notification from "../components/Notification";
 import PageHeading from "../components/PageHeading";
 import SignInForm from "../components/SignInForm";
+import WidthContainer from "../components/WidthContainer";
 import useNotificationState from "../hooks/useNotificationState";
 import { getFirebaseAuthError } from "../util/firebaseUtils";
 import { auth } from "./_app";
@@ -57,17 +58,20 @@ const SignIn: NextPage = () => {
 
       <MainContainer>
         <NavbarDesktop />
-        <PageHeading>{action === "signin" ? "Sign In" : "Create Account"}</PageHeading>
+        <WidthContainer>
+          <PageHeading>{action === "signin" ? "Sign In" : "Create Account"}</PageHeading>
 
-        <SignInForm action={action} onSubmit={onSubmit} />
+          <SignInForm action={action} onSubmit={onSubmit} />
 
-        <Button
-          className="bg-indigo-700 text-white m-2"
-          onClick={() => setAction((prev) => (prev === "signin" ? "signup" : "signin"))}
-        >
-          {action === "signin" ? "Need an account? Create one" : "Already have an account? Sign in"}
-        </Button>
-
+          <Button
+            className="bg-indigo-700 text-white m-2"
+            onClick={() => setAction((prev) => (prev === "signin" ? "signup" : "signin"))}
+          >
+            {action === "signin"
+              ? "Need an account? Create one"
+              : "Already have an account? Sign in"}
+          </Button>
+        </WidthContainer>
         <NavbarMobile />
 
         <Notification state={notificationState} />

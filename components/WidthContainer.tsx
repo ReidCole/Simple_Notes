@@ -5,7 +5,7 @@ type Props = {
 };
 
 const WidthContainer: React.FC<Props> = ({ children }) => {
-  return <div className="max-w-xl">{children}</div>;
+  return <div className="md:max-w-xl w-full flex flex-col h-full mx-auto">{children}</div>;
 };
 
 export default WidthContainer;

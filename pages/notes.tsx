@@ -9,6 +9,7 @@ import NotesButtons from "../components/NoteListButtons";
 import NotesList from "../components/NotesList";
 import PageHeading from "../components/PageHeading";
 import Tabs from "../components/Tabs";
+import WidthContainer from "../components/WidthContainer";
 import useNoteLists from "../hooks/useNoteLists";
 import { RootState } from "../redux";
 import { noteActions } from "../redux/noteReducer";
@@ -39,24 +40,24 @@ const Notes: NextPage = () => {
 
       <MainContainer>
         <NavbarDesktop />
-        <PageHeading>All Notes</PageHeading>
-        <Tabs
-          tabs={
-            user === null
-              ? [{ text: "Browser Storage" }]
-              : [{ text: "Browser Storage" }, { text: "Account" }]
-          }
-          activeIndex={activeIndex}
-          setActiveIndex={setActiveIndex}
-        />
-        <div className="h-full overflow-y-scroll py-2 mb-2">
-          {activeIndex === 0 && (
-            <NotesList notes={sortedLocalStorageNotes} listName="Browser Storage" />
-          )}
-          {activeIndex === 1 && <NotesList notes={sortedAccountNotes} listName="Account" />}
-        </div>
-
-        <NotesButtons />
+        <WidthContainer>
+          <PageHeading>All Notes</PageHeading>
+          <Tabs
+            tabs={
+              user === null
+                ? [{ text: "Browser Storage" }]
+                : [{ text: "Browser Storage" }, { text: "Account" }]
+            }
+            activeIndex={activeIndex}
+            setActiveIndex={setActiveIndex}
+          />
+          <div className="overflow-y-scroll h-full flex flex-col my-2">
+            {activeIndex === 0 && (
+              <NotesList notes={sortedLocalStorageNotes} listName="Browser Storage" />
+            )}
+            {activeIndex === 1 && <NotesList notes={sortedAccountNotes} listName="Account" />}
+          </div>
+        </WidthContainer>
 
         <NavbarMobile />
       </MainContainer>

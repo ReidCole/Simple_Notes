@@ -17,6 +17,7 @@ import useNotificationState from "../hooks/useNotificationState";
 import { RootState } from "../redux";
 import { deleteAccount, deleteAllLocalStorageNotes } from "../util/noteUtils";
 import NavbarDesktop from "../components/NavbarDesktop";
+import WidthContainer from "../components/WidthContainer";
 
 const Settings: NextPage = () => {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -68,44 +69,46 @@ const Settings: NextPage = () => {
 
       <MainContainer>
         <NavbarDesktop />
-        <PageHeading>Settings</PageHeading>
-        <div className="px-2 flex flex-col items-center h-full">
-          <p className="mb-2 bg-gray-200 p-2 border border-gray-300">
-            {user ? `Signed in as ${user.email}` : "Not signed in"}
-          </p>
+        <WidthContainer>
+          <PageHeading>Settings</PageHeading>
+          <div className="px-2 flex flex-col items-center h-full">
+            <p className="mb-2 bg-gray-200 p-2 border border-gray-300">
+              {user ? `Signed in as ${user.email}` : "Not signed in"}
+            </p>
 
-          <ButtonGroup>
-            <Button
-              className="gap-1.5"
-              enabledClasses="bg-red-700 text-white"
-              onClick={() => {
-                setDeleteNotesModalShowing(true);
-              }}
-              title="Delete All Browser Storage Notes"
-            >
-              <i className="bi-window text-xl flex" /> Delete Browser Storage Notes
-            </Button>
-            {user !== null && (
+            <ButtonGroup>
               <Button
-                className="gap-1"
+                className="gap-1.5"
                 enabledClasses="bg-red-700 text-white"
-                onClick={() => setDeleteAccountModalShowing(true)}
+                onClick={() => {
+                  setDeleteNotesModalShowing(true);
+                }}
                 title="Delete All Browser Storage Notes"
               >
-                <i className="bi-person text-xl flex" /> Delete Account
+                <i className="bi-window text-xl flex" /> Delete Browser Storage Notes
               </Button>
-            )}
-          </ButtonGroup>
-        </div>
+              {user !== null && (
+                <Button
+                  className="gap-1"
+                  enabledClasses="bg-red-700 text-white"
+                  onClick={() => setDeleteAccountModalShowing(true)}
+                  title="Delete All Browser Storage Notes"
+                >
+                  <i className="bi-person text-xl flex" /> Delete Account
+                </Button>
+              )}
+            </ButtonGroup>
+          </div>
 
-        <p className="text-center p-2">
-          Site made by Reid Cole.{" "}
-          <Link href="https://reidcole.me" passHref>
-            <a className="underline text-blue-600" target="_blank" rel="noopener noreferrer">
-              See more of my projects.
-            </a>
-          </Link>
-        </p>
+          <p className="text-center p-2">
+            Site made by Reid Cole.{" "}
+            <Link href="https://reidcole.me" passHref>
+              <a className="underline text-blue-600" target="_blank" rel="noopener noreferrer">
+                See more of my projects.
+              </a>
+            </Link>
+          </p>
+        </WidthContainer>
 
         <NavbarMobile />
 

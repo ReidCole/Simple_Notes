@@ -9,7 +9,7 @@ type Props = {
 const NotesList: React.FC<Props> = ({ notes, listName }) => {
   if (notes.length > 0) {
     return (
-      <div className="px-2 w-full">
+      <div className="px-2 w-full flex flex-col">
         <div className="flex flex-col gap-2 h-full">
           {notes.map((note) => (
             <NoteListing note={note} key={note.id} />

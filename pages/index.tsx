@@ -10,6 +10,7 @@ import NoteInputs from "../components/NoteInputs";
 import PageHeading from "../components/PageHeading";
 import SaveButton from "../components/SaveButton";
 import VisibilityButton from "../components/VisibilityButton";
+import WidthContainer from "../components/WidthContainer";
 import { RootState } from "../redux";
 import { noteActions } from "../redux/noteReducer";
 
@@ -30,15 +31,17 @@ const Home: NextPage = () => {
       <MainContainer>
         <NavbarDesktop />
 
-        <PageHeading>New Note</PageHeading>
+        <WidthContainer>
+          <PageHeading>New Note</PageHeading>
 
-        <NoteInputs />
+          <NoteInputs />
 
-        <ButtonGroup>
-          {user !== null && <VisibilityButton />}
+          <ButtonGroup>
+            {user !== null && <VisibilityButton />}
 
-          <SaveButton />
-        </ButtonGroup>
+            <SaveButton />
+          </ButtonGroup>
+        </WidthContainer>
 
         <NavbarMobile />
       </MainContainer>

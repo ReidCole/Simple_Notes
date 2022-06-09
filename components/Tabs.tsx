@@ -13,7 +13,7 @@ type TabType = {
 
 const Tabs: React.FC<Props> = ({ tabs, activeIndex, setActiveIndex }) => {
   return (
-    <div className="w-full flex flex-row px-2 gap-2 border-b border-black h-16 items-end">
+    <div className="w-full flex flex-row px-2 gap-2 border-gray-300 h-16 items-end">
       {tabs.map((tab, index) => (
         <Tab
           key={tab.text}
