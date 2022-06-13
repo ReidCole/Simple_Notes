@@ -99,16 +99,15 @@ const Settings: NextPage = () => {
               )}
             </ButtonGroup>
           </div>
-
-          <p className="text-center p-2">
-            Site made by Reid Cole.{" "}
-            <Link href="https://reidcole.me" passHref>
-              <a className="underline text-blue-600" target="_blank" rel="noopener noreferrer">
-                See more of my projects.
-              </a>
-            </Link>
-          </p>
         </WidthContainer>
+        <p className="text-center p-2 bg-gray-700 text-white w-full">
+          Site made by Reid Cole.{" "}
+          <Link href="https://reidcole.me" passHref>
+            <a className="underline text-blue-400" target="_blank" rel="noopener noreferrer">
+              See more of my projects.
+            </a>
+          </Link>
+        </p>
 
         <NavbarMobile />
 

@@ -74,3 +74,10 @@ other stuff
 
 current
 - add loading state and error states to note view page
+
+
+
+
+
+
+FIX ITEMS BEING AT BOTTOM OF SCREEN ON DESKTOP - ADD A MAX HEIGHT
