@@ -8,6 +8,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, User } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import AuthContainer from "../components/AuthContainer";
+import Head from "next/head";
 const firebaseConfig = {
   apiKey: "AIzaSyCkUS_we7xqr_q_9POaYDBiFd-J5x--pZ8",
   authDomain: "simplenotes-project.firebaseapp.com",
@@ -22,13 +23,21 @@ export const firestore = getFirestore(app);
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={store}>
-      <AuthContainer>
-        <UIContextProvider>
-          <Component {...pageProps} />
-        </UIContextProvider>
-      </AuthContainer>
-    </Provider>
+    <>
+      <Head>
+        <meta
+          name="description"
+          content="A simple note taking website where you can save notes to your browser or the cloud."
+        />
+      </Head>
+      <Provider store={store}>
+        <AuthContainer>
+          <UIContextProvider>
+            <Component {...pageProps} />
+          </UIContextProvider>
+        </AuthContainer>
+      </Provider>
+    </>
   );
 }
 
